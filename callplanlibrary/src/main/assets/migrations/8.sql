@@ -1,0 +1,2 @@
+CREATE TABLE if not exists  mTipeSumberData(Id INT PRIMARY KEY NOT NULL,txtSumberDataID   TEXT,txtCabangID TEXT,TipeSumberDataID  TEXT,txtNamaInstitusi  TEXT,txtAlamat  TEXT,txtNamaPropinsi  TEXT,txtNamaCabang  TEXT,txtLatitude  TEXT,txtLongitude  TEXT,txtAcc  TEXT) ;
+CREATE TABLE if not exists  Mobile_mAllBranch(Id INT PRIMARY KEY NOT NULL,IntCabangID   TEXT,TxtKodeCabang TEXT,TxtNamaCabang  TEXT) ;

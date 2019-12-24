@@ -1,0 +1,2 @@
+CREATE TABLE if not exists  Mobile_mBranch(Id INT PRIMARY KEY NOT NULL,IntCabangID   INT,TxtKodeCabang TEXT,TxtNamaCabang  TEXT) ;
+CREATE TABLE if not exists  Mobile_trUserLogin(Id INT PRIMARY KEY NOT NULL,idUserLogin   INT,IntCabangID TEXT,txtGUI  TEXT, txtUserID TEXT, txtRoleID TEXT, txtRoleName TEXT, txtPathImage TEXT, txtUserName TEXT, txtName TEXT, txtEmail TEXT, txtEmpID TEXT, txtBranchCode TEXT, txtOutletCode TEXT, txtOutletName TEXT, dtLastLogin TEXT, txtDeviceId TEXT, dtCheckIn TEXT, dtCheckOut TEXT, dtLogOut TEXT) ;

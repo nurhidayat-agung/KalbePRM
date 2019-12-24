@@ -1,0 +1,140 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Branch"
+            style="@style/InputLabel"/>
+
+        <Spinner
+            android:id="@+id/spnBranch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvFindBy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/InputLabel"
+                android:text="Find By"/>
+
+            <Spinner
+                android:id="@+id/spnSearchBy"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvFindBy" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_poa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/spnSearchBy"
+                android:layout_alignTop="@+id/tvFindBy"
+                android:layout_marginLeft="20dp">
+
+                <EditText
+                    android:id="@+id/etSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Search Name"
+                    android:inputType="textPersonName"
+                    android:drawableRight="@drawable/ic_close"/>
+
+            </android.support.design.widget.TextInputLayout>
+        </RelativeLayout>
+
+
+        <!--<EditText-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:inputType="textPersonName"-->
+        <!--android:hint="Search Name"-->
+        <!--android:id="@+id/etSearch" />-->
+
+        <!--<android.support.design.widget.TextInputLayout-->
+        <!--android:id="@+id/input_layout_poa"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+
+        <!--<EditText-->
+        <!--android:id="@+id/etSearch"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:hint="POA Name"-->
+        <!--android:inputType="textPersonName" />-->
+
+        <!--</android.support.design.widget.TextInputLayout>-->
+
+        <Button
+            android:id="@+id/btnSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Search"
+            android:layout_marginTop="10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:id="@+id/listNoData">
+
+            <ImageView
+                app:srcCompat="@drawable/thumb"
+                android:id="@+id/iv_emptyresult"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:alpha="0.3"
+                android:drawingCacheQuality="low"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="There is no data to show" />
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/listDataOutlet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tlAbesen"
+            android:layout_alignParentStart="true"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TableLayout
+                    android:id="@+id/tblData"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </TableLayout>
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

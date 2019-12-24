@@ -1,0 +1,22 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="callplan.prm.kalbe.callplanlibrary">
+
+    <application android:allowBackup="true" android:label="@string/app_name"
+        android:name="callplan.prm.kalbe.callplanlibrary.MyApp"
+        android:supportsRtl="true">
+
+        <meta-data
+            android:name="AA_DB_NAME"
+            android:value="callPlanMobile.db" />
+        <meta-data
+            android:name="AA_DB_VERSION"
+            android:value="8" />
+        <meta-data android:name="AA_SERIALIZERS"
+            android:value="callplan.prm.kalbe.callplanlibrary.common.ByteArraySerializer" />
+        <meta-data android:name="AA_MODELS"
+            android:value="callplan.prm.kalbe.callplanlibrary.common.clsMobile_trUserLogin,
+             callplan.prm.kalbe.callplanlibrary.common.clsMobile_mConfig,
+             callplan.prm.kalbe.callplanlibrary.common.clsMobile_trVisitPlan_Detail" />
+    </application>
+
+</manifest>
