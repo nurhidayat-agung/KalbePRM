@@ -3,6 +3,7 @@ package callplan.prm.kalbe.kalbecallplanmobile.roomDAO;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -20,7 +21,7 @@ public interface DAOMobile_mVisitPlanCategoryDetail {
     @Query("SELECT * FROM mVisitPlanCategoryDetail")
     List<clsMobile_mVisitPlanCategoryDetail> getAll();
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(clsMobile_mVisitPlanCategoryDetail planCategoryDetail);
 
     @Delete
@@ -29,4 +30,12 @@ public interface DAOMobile_mVisitPlanCategoryDetail {
     @Update
     void update(clsMobile_mVisitPlanCategoryDetail planCategoryDetail);
 
+    @Query("select * from mvisitplancategorydetail where intCategoryID = :s and IntJabatanID = :s1")
+    List<clsMobile_mVisitPlanCategoryDetail> getBytxtConstintCategoryID_txtConstIntJabatanID(int s, int s1);
+
+    @Query("select * from mvisitplancategorydetail where intCategoryIDDetail = :intCategory_detailID")
+    List<clsMobile_mVisitPlanCategoryDetail> gettxtConstintCategoryIDDetail(Long intCategory_detailID);
+
+    @Query("delete from mvisitplancategorydetail")
+    void deleteAll();
 }

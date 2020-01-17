@@ -3,6 +3,7 @@ package callplan.prm.kalbe.kalbecallplanmobile.roomDAO;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -20,7 +21,7 @@ public interface DAOMobile_MPartnerProfileAlias {
     @Query("SELECT * FROM Mobile_MPartnerProfileAlias")
     List<clsMobile_MPartnerProfileAlias> getAll();
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(clsMobile_MPartnerProfileAlias profileAlias);
 
     @Delete
@@ -29,4 +30,15 @@ public interface DAOMobile_MPartnerProfileAlias {
     @Update
     void update(clsMobile_MPartnerProfileAlias profileAlias);
 
+    @Query("select * from mobile_mpartnerprofilealias where intPartnerIDSub = :toString")
+    List<clsMobile_MPartnerProfileAlias> getBytxtConstintPartnerIDSub(String toString);
+
+    @Query("select * from mobile_mpartnerprofilealias where IntPartnerID = :intPartnerID")
+    List<clsMobile_MPartnerProfileAlias> gettxtConstIntPartnerID(Long intPartnerID);
+
+    @Query("select * from mobile_mpartnerprofilealias where txtPartnerCRM like :txtOutletKodeSumberDataID")
+    List<clsMobile_MPartnerProfileAlias> getBytxtConsttxtPartnerCRM(String txtOutletKodeSumberDataID);
+
+    @Query("delete from mobile_mpartnerprofilealias")
+    void deleteAll();
 }

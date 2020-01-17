@@ -2,7 +2,8 @@ package callplan.prm.kalbe.kalbecallplanmobile.addons.tableview;
 
 import java.util.Comparator;
 
-import callplan.prm.kalbe.callplanlibrary.common.ReportTable;
+// import callplan.prm.kalbe.callplanlibrary.common.ReportTable;
+import callplan.prm.kalbe.kalbecallplanmobile.model.ReportTable;
 
 public final class ReportComparators {
 

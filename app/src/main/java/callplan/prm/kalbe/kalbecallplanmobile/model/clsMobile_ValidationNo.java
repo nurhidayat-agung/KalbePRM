@@ -3,6 +3,7 @@ package callplan.prm.kalbe.kalbecallplanmobile.model;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 /**
@@ -15,10 +16,12 @@ public class clsMobile_ValidationNo {
     @NonNull
     @ColumnInfo(name = "txtValidationNo")
     public String txtValidationNo;
+    @Ignore
     public final String txtConsttxtValidationNo = "txtValidationNo";
 
     @ColumnInfo(name = "BitUse")
     public String bitUse;
+    @Ignore
     public final String txtConstBitUse = "BitUse";
 }
 

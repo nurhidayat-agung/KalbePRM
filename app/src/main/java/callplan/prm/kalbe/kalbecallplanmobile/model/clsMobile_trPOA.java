@@ -3,6 +3,7 @@ package callplan.prm.kalbe.kalbecallplanmobile.model;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 /**
@@ -15,25 +16,31 @@ public class clsMobile_trPOA {
     @NonNull
     @ColumnInfo(name = "intProgramID")
     public Long intProgramID;
+    @Ignore
     public final String txtConstintProgramID  = "intProgramID";
 
     @ColumnInfo(name = "txtNamaProgram")
     public String txtNamaProgram;
+    @Ignore
     public final String txtConsttxtNamaProgram  = "txtNamaProgram";
 
     @ColumnInfo(name = "dtStartDate")
     public String dtStartDate;
+    @Ignore
     public final String txtConstdtStartDate  = "dtStartDate";
 
     @ColumnInfo(name = "dtEndDate")
     public String dtEndDate;
+    @Ignore
     public final String txtConstdtEndDate  = "dtEndDate";
 
     @ColumnInfo(name = "txtProgramDescription")
     public String txtProgramDescription;
+    @Ignore
     public final String txtConsttxtProgramDescription  = "txtProgramDescription";
 
     @ColumnInfo(name = "txtServer")
     public String txtServer;
+    @Ignore
     public final String txtConsttxtServer  = "txtServer";
 }

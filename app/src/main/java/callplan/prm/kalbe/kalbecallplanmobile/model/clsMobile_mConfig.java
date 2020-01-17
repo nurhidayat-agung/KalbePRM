@@ -6,6 +6,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 
+
 /**
  * Created by rhezaTesar on 9/28/2016.
  * migrated to Android room by ghqp 12/24/2019

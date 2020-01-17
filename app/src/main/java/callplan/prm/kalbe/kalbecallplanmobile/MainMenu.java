@@ -2,8 +2,10 @@ package callplan.prm.kalbe.kalbecallplanmobile;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -26,7 +28,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.activeandroid.query.Select;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -39,16 +40,25 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import callplan.prm.kalbe.callplanlibrary.common.clsMobile_UserJabatan;
-import callplan.prm.kalbe.callplanlibrary.common.clsMobile_mBinaryFile;
-import callplan.prm.kalbe.callplanlibrary.common.clsMobile_mConfig;
-import callplan.prm.kalbe.callplanlibrary.common.clsMobile_mVersionApp;
-import callplan.prm.kalbe.callplanlibrary.common.clsMobile_trUserLogin;
-import callplan.prm.kalbe.callplanlibrary.common.clsMobile_trVisitPlan_Detail;
-import callplan.prm.kalbe.callplanlibrary.common.clsMobile_trVisitPlan_Header;
-import callplan.prm.kalbe.callplanlibrary.common.clsWarning;
+//import callplan.prm.kalbe.callplanlibrary.common.clsMobile_UserJabatan;
+//import callplan.prm.kalbe.callplanlibrary.common.clsMobile_mBinaryFile;
+//import callplan.prm.kalbe.callplanlibrary.common.clsMobile_mConfig;
+//import callplan.prm.kalbe.callplanlibrary.common.clsMobile_mVersionApp;
+//import callplan.prm.kalbe.callplanlibrary.common.clsMobile_trUserLogin;
+//import callplan.prm.kalbe.callplanlibrary.common.clsMobile_trVisitPlan_Detail;
+//import callplan.prm.kalbe.callplanlibrary.common.clsMobile_trVisitPlan_Header;
+//import callplan.prm.kalbe.callplanlibrary.common.clsWarning;
 import callplan.prm.kalbe.kalbecallplanmobile.bl.Mobile_trUserLoginBL;
 import callplan.prm.kalbe.kalbecallplanmobile.bl.clsMainBL;
+import callplan.prm.kalbe.kalbecallplanmobile.model.clsMobile_UserJabatan;
+import callplan.prm.kalbe.kalbecallplanmobile.model.clsMobile_mBinaryFile;
+import callplan.prm.kalbe.kalbecallplanmobile.model.clsMobile_mConfig;
+import callplan.prm.kalbe.kalbecallplanmobile.model.clsMobile_mVersionApp;
+import callplan.prm.kalbe.kalbecallplanmobile.model.clsMobile_trUserLogin;
+import callplan.prm.kalbe.kalbecallplanmobile.model.clsMobile_trVisitPlan_Detail;
+import callplan.prm.kalbe.kalbecallplanmobile.model.clsMobile_trVisitPlan_Header;
+import callplan.prm.kalbe.kalbecallplanmobile.model.clsWarning;
+import callplan.prm.kalbe.kalbecallplanmobile.app.AppDatabase;
 import callplan.prm.kalbe.kalbecallplanmobile.service.MyServiceNative;
 import de.hdodenhof.circleimageview.CircleImageView;
 import kalbenutritionals.bridgeapi.BridgeAPI;
@@ -56,7 +66,7 @@ import kalbenutritionals.bridgeapi.common.clsDataLogin;
 
 public class MainMenu extends clsMainAppCompatActivity implements View.OnClickListener {
     int intProcesscancel = 0;
-    public clsWarning _clsWarning=new clsWarning();
+    public clsWarning _clsWarning = new clsWarning();
 
     private TextView tvUsername, tvEmail;
     private CircleImageView ivProfile;
@@ -66,21 +76,23 @@ public class MainMenu extends clsMainAppCompatActivity implements View.OnClickLi
     private clsMobile_trUserLogin _clsMobile_trUserLogin;
     clsMainBL _clsMainBL;
     Toolbar toolbar;
+    private AppDatabase appDatabase;
+
     @Override
     public void onBackPressed() {
-        List<Fragment> dtFragment1= new ArrayList<>();
-        if(getSupportFragmentManager().getFragments().size()<1){
-            Fragment dtFragment=getSupportFragmentManager().getFragments().get(0);
+        List<Fragment> dtFragment1 = new ArrayList<>();
+        if (getSupportFragmentManager().getFragments().size() < 1) {
+            Fragment dtFragment = getSupportFragmentManager().getFragments().get(0);
             dtFragment1.add(dtFragment);
-        }else{
-            dtFragment1=getSupportFragmentManager().getFragments();
+        } else {
+            dtFragment1 = getSupportFragmentManager().getFragments();
         }
 
         for (Fragment fragment : dtFragment1) {
-            if(fragment!=null){
-                if(fragment.toString().contains("HomeFragment")){
+            if (fragment != null) {
+                if (fragment.toString().contains("HomeFragment")) {
                     finish();
-                }else{
+                } else {
                     toolbar.setTitle("Home");
                     HomeFragment homeFragment = new HomeFragment();
                     FragmentTransaction fragmentTransactionHome = getSupportFragmentManager().beginTransaction();
@@ -90,29 +102,38 @@ public class MainMenu extends clsMainAppCompatActivity implements View.OnClickLi
             }
         }
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-
+        appDatabase = AppDatabase.getDatabase(getApplicationContext());
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Home");
         setSupportActionBar(toolbar);
-        _clsMainBL=new clsMainBL();
+        _clsMainBL = new clsMainBL();
 
         //new clsMainBL().CopyDatabase(getApplication());
-        List<clsMobile_trUserLogin> _ListOfUserLogin = new Select().from(clsMobile_trUserLogin.class).execute();
-        clsMobile_trUserLogin dt =_ListOfUserLogin.get(0);
+        // List<clsMobile_trUserLogin> _ListOfUserLogin = new Select()
+        // .from(clsMobile_trUserLogin.class).execute();
+        List<clsMobile_trUserLogin> _ListOfUserLogin = appDatabase.daoMobileTrUserLogin().getAll();
+
+        clsMobile_trUserLogin dt = _ListOfUserLogin.get(0);
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         View vwHeader = navigationView.getHeaderView(0);
         ivProfile = (CircleImageView) vwHeader.findViewById(R.id.profile_image);
         clsMobile_mBinaryFile dtclsMobile_mBinaryFile = new clsMobile_mBinaryFile();
-        List<clsMobile_mBinaryFile> ListOfclsMobile_mBinaryFile = new Select().from(clsMobile_mBinaryFile.class).where(dtclsMobile_mBinaryFile.txtConsttxtGUI_IDTable + "=?", "1").execute();
-        if(_clsMainBL.isMyServiceRunning(MyServiceNative.class,getApplicationContext())==false){
+        // List<clsMobile_mBinaryFile> ListOfclsMobile_mBinaryFile = new Select()
+        // .from(clsMobile_mBinaryFile.class)
+        // .where(dtclsMobile_mBinaryFile.txtConsttxtGUI_IDTable + "=?", "1").execute();
+        List<clsMobile_mBinaryFile> ListOfclsMobile_mBinaryFile = appDatabase.daoMobile_mBinaryFile()
+                .getbytxtGUI_IDTable();
+
+        if (_clsMainBL.isMyServiceRunning(MyServiceNative.class, getApplicationContext()) == false) {
             startService(new Intent(getApplicationContext(), MyServiceNative.class));
         }
 
-        if(ListOfclsMobile_mBinaryFile.size() != 0){
+        if (ListOfclsMobile_mBinaryFile.size() != 0) {
             Bitmap dtBitmap = new clsMainBL().getImageFromclsMobile_mBinaryFile(ListOfclsMobile_mBinaryFile.get(0));
             Bitmap photo_view = Bitmap.createScaledBitmap(dtBitmap, 600, 600, true);
             ivProfile.setImageBitmap(photo_view);
@@ -128,14 +149,14 @@ public class MainMenu extends clsMainAppCompatActivity implements View.OnClickLi
         Intent intent = getIntent();
         String txtData = intent.getStringExtra("Data");
         String intVisitPlan = intent.getStringExtra("intVisitPlan");
-        if(txtData!=null){
-            if(txtData.equals("0")){
+        if (txtData != null) {
+            if (txtData.equals("0")) {
                 toolbar.setTitle("Home");
                 HomeFragment homeFragment = new HomeFragment();
                 FragmentTransaction fragmentTransactionHome = getSupportFragmentManager().beginTransaction();
                 fragmentTransactionHome.replace(R.id.frame, homeFragment);
                 fragmentTransactionHome.commit();
-            }else if(txtData.equals("1")){
+            } else if (txtData.equals("1")) {
                 toolbar.setTitle("Push Data");
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
                 PushDataFragment pushDataFragment = new PushDataFragment();
@@ -145,24 +166,29 @@ public class MainMenu extends clsMainAppCompatActivity implements View.OnClickLi
                 header.removeItem(R.id.mncallPlan);
                 header.removeItem(R.id.mnDownloadData);
                 header.removeItem(R.id.mnEdetailing);
-            }else if(txtData.equals("PUSHDATA")){
+            } else if (txtData.equals("PUSHDATA")) {
                 toolbar.setTitle("Push Data");
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
                 PushDataFragment pushDataFragment = new PushDataFragment();
                 FragmentTransaction fragmentTransactionPushData = getSupportFragmentManager().beginTransaction();
                 fragmentTransactionPushData.replace(R.id.frame, pushDataFragment);
                 fragmentTransactionPushData.commit();
-            }else if(txtData.equals("3")){
-                clsMobile_trVisitPlan_Detail _clsMobile_trVisitPlan_Detail=new clsMobile_trVisitPlan_Detail();
-                List<clsMobile_trVisitPlan_Detail> listDataDetaila= new Select().from(clsMobile_trVisitPlan_Detail.class).where(_clsMobile_trVisitPlan_Detail.txtConstintVisitPlan_DetailID+"=?",intVisitPlan).execute();
-                if(listDataDetaila.size()>0){
+            } else if (txtData.equals("3")) {
+                clsMobile_trVisitPlan_Detail _clsMobile_trVisitPlan_Detail = new clsMobile_trVisitPlan_Detail();
+                // List<clsMobile_trVisitPlan_Detail> listDataDetaila = new Select()
+                // .from(clsMobile_trVisitPlan_Detail.class)
+                // .where(_clsMobile_trVisitPlan_Detail.txtConstintVisitPlan_DetailID + "=?", intVisitPlan).execute();
+                List<clsMobile_trVisitPlan_Detail> listDataDetaila = appDatabase.daoMobileTrVisitPlanDetail()
+                        .gettxtConstintVisitPlan_DetailID(intVisitPlan);
+
+                if (listDataDetaila.size() > 0) {
                     toolbar.setTitle("Call Plan Data");
                     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
                     CallPlanFragment CallPlanFragment = new CallPlanFragment(listDataDetaila.get(0).txtGUI_Detail);
                     FragmentTransaction fragmentTransactionCallPlanFragment = getSupportFragmentManager().beginTransaction();
                     fragmentTransactionCallPlanFragment.replace(R.id.frame, CallPlanFragment);
                     fragmentTransactionCallPlanFragment.commit();
-                }else{
+                } else {
                     toolbar.setTitle("Home");
                     HomeFragment homeFragment = new HomeFragment();
                     FragmentTransaction fragmentTransactionHome = getSupportFragmentManager().beginTransaction();
@@ -170,7 +196,7 @@ public class MainMenu extends clsMainAppCompatActivity implements View.OnClickLi
                     fragmentTransactionHome.commit();
                 }
             }
-        }else{
+        } else {
             toolbar.setTitle("Home");
             HomeFragment homeFragment = new HomeFragment();
             FragmentTransaction fragmentTransactionHome = getSupportFragmentManager().beginTransaction();
@@ -191,9 +217,11 @@ public class MainMenu extends clsMainAppCompatActivity implements View.OnClickLi
         String txtLink=_Mobile_mConfigBL.getValue(enum_mconfig.API.getValue());
         subMenuVersion.add(txtLink.replace("/VisitPlan/API/VisitPlanAPI/","")).setEnabled(false).setCheckable(false);
         */
-        List<clsMobile_trVisitPlan_Header> ListOfclsMobile_MBranch=new Select().from(clsMobile_trVisitPlan_Header.class).execute();
+        // List<clsMobile_trVisitPlan_Header> ListOfclsMobile_MBranch = new Select()
+        // .from(clsMobile_trVisitPlan_Header.class).execute();
+        List<clsMobile_trVisitPlan_Header> ListOfclsMobile_MBranch = appDatabase.daoMobileTrVisitPlanHeader().getAll();
 
-        if(ListOfclsMobile_MBranch.size() == 0){
+        if (ListOfclsMobile_MBranch.size() == 0) {
             header.removeItem(R.id.mncallPlan);
             header.removeItem(R.id.mnReporting);
             header.removeItem(R.id.mnEdetailing);
@@ -253,16 +281,22 @@ public class MainMenu extends clsMainAppCompatActivity implements View.OnClickLi
                                 .setIcon(android.R.drawable.ic_dialog_alert)
                                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int whichButton) {
-                                        clsMobile_trVisitPlan_Detail _clsMobile_trVisitPlan_Detail=new clsMobile_trVisitPlan_Detail();
-                                        List<clsMobile_trVisitPlan_Detail> ListOfclsMobile_trVisitPlan_Detail=new Select().from(clsMobile_trVisitPlan_Detail.class).where(_clsMobile_trVisitPlan_Detail.txtConstintSubmit+"=2").execute();
-                                        if(ListOfclsMobile_trVisitPlan_Detail.size()>0){
-                                            AsyncCall _AsyncCall=new AsyncCall();
+                                        clsMobile_trVisitPlan_Detail _clsMobile_trVisitPlan_Detail = new clsMobile_trVisitPlan_Detail();
+                                        // List<clsMobile_trVisitPlan_Detail> ListOfclsMobile_trVisitPlan_Detail = new Select()
+                                        // .from(clsMobile_trVisitPlan_Detail.class)
+                                        // .where(_clsMobile_trVisitPlan_Detail.txtConstintSubmit + "=2").execute();
+                                        List<clsMobile_trVisitPlan_Detail> ListOfclsMobile_trVisitPlan_Detail = appDatabase
+                                                .daoMobileTrVisitPlanDetail().getByIntSubmit(2);
+
+                                        if (ListOfclsMobile_trVisitPlan_Detail.size() > 0) {
+                                            AsyncCall _AsyncCall = new AsyncCall();
                                             _AsyncCall.execute();
-                                        }else{
-                                            AsyncCallLogOut _AsyncCallLogOut=new AsyncCallLogOut();
+                                        } else {
+                                            AsyncCallLogOut _AsyncCallLogOut = new AsyncCallLogOut(MainMenu.this);
                                             _AsyncCallLogOut.execute();
                                         }
-                                    }})
+                                    }
+                                })
                                 .setNegativeButton(android.R.string.no, null).show();
                         //_clsMainBL.showToast(getApplication(),"5");
                         return true;
@@ -286,24 +320,30 @@ public class MainMenu extends clsMainAppCompatActivity implements View.OnClickLi
                         return true;
                     case R.id.mnEdetailing:
                         BridgeAPI bridgeAPI = new BridgeAPI();
-                        clsMobile_mConfig _clsMobile_mConfig=new clsMobile_mConfig();
-                        List<clsMobile_mConfig> ListOfclsMobile_mConfig = new Select().from(clsMobile_mConfig.class).where("idConfig=?",9).execute();
-                        if(ListOfclsMobile_mConfig.size()>0){
+                        clsMobile_mConfig _clsMobile_mConfig = new clsMobile_mConfig();
+                        // List<clsMobile_mConfig> ListOfclsMobile_mConfig = new Select()
+                        // .from(clsMobile_mConfig.class).where("idConfig=?", 9).execute();
+                        List<clsMobile_mConfig> ListOfclsMobile_mConfig = appDatabase.daoMobileMConfig().getbyIdConfig(9);
+
+                        if (ListOfclsMobile_mConfig.size() > 0) {
                             //Boolean status = bridgeAPI.checkInstalledApplication(MainMenu.this, "kalbenutritionals.testjar");
                             Boolean status = bridgeAPI.checkInstalledApplication(MainMenu.this, "com.edetailing");
-                            if(status){
-                                List<clsMobile_trUserLogin> dataLogin = new Select().from(clsMobile_trUserLogin.class).execute();
-                                if(dataLogin.size()>0){
-                                    clsDataLogin dtUser = new clsMainBL().getDataLogin();
-                                    bridgeAPI.intentWithPackageName(MainMenu.this, "com.edetailing","com.edetailing.MainActivity", dtUser, "0");
-                                }else{
-                                    new clsMainBL().showToastWarning(MainMenu.this,"user login null, please contact admin PRM!!");
+                            if (status) {
+                                // List<clsMobile_trUserLogin> dataLogin = new Select()
+                                // .from(clsMobile_trUserLogin.class).execute();
+                                List<clsMobile_trUserLogin> dataLogin = appDatabase.daoMobileTrUserLogin().getAll();
+
+                                if (dataLogin.size() > 0) {
+                                    clsDataLogin dtUser = new clsMainBL().getDataLogin(getApplicationContext());
+                                    bridgeAPI.intentWithPackageName(MainMenu.this, "com.edetailing", "com.edetailing.MainActivity", dtUser, "0");
+                                } else {
+                                    new clsMainBL().showToastWarning(MainMenu.this, "user login null, please contact admin PRM!!");
                                 }
-                            }else{
-                                new clsMainBL().showToastWarning(MainMenu.this,"please installed Application E Detailing!!");
+                            } else {
+                                new clsMainBL().showToastWarning(MainMenu.this, "please installed Application E Detailing!!");
                             }
-                        }else{
-                            new clsMainBL().showToastWarning(MainMenu.this,"Name App E Detailing is null. please contact Admin PRM!!");
+                        } else {
+                            new clsMainBL().showToastWarning(MainMenu.this, "Name App E Detailing is null. please contact Admin PRM!!");
                         }
                         //_clsMainBL.showToast(getApplication(),"4");
                         return true;
@@ -332,19 +372,21 @@ public class MainMenu extends clsMainAppCompatActivity implements View.OnClickLi
         actionBarDrawerToggle.syncState();
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
+
     private GoogleApiClient client;
 
     @Override
     public void onClick(View v) {
 
     }
+
     private class AsyncCall extends AsyncTask<JSONObject, Void, JSONObject> {
         @Override
         protected JSONObject doInBackground(JSONObject... params) {
 
-            JSONObject JsonResult=null;
+            JSONObject JsonResult = null;
             try {
-                JsonResult=_clsMainBL.PushDataCallPlan();
+                JsonResult = _clsMainBL.PushDataCallPlan(getApplicationContext());
 
             } catch (Exception e) {
                 // TODO Auto-generated catch block
@@ -352,7 +394,9 @@ public class MainMenu extends clsMainAppCompatActivity implements View.OnClickLi
             }
             return JsonResult;
         }
+
         private ProgressDialog Dialog = new ProgressDialog(MainMenu.this);
+
         @Override
         protected void onCancelled() {
             Dialog.dismiss();
@@ -363,35 +407,46 @@ public class MainMenu extends clsMainAppCompatActivity implements View.OnClickLi
 
         @Override
         protected void onPostExecute(JSONObject JsonRes) {
-            if(_clsMainBL.ValidJSON(JsonRes)){
-                String TxtWarn="";
-                String txtvalidJson= null;
+            if (_clsMainBL.ValidJSON(JsonRes)) {
+                String TxtWarn = "";
+                String txtvalidJson = null;
                 try {
                     txtvalidJson = (String.valueOf(JsonRes.get("validJson")));
-                    JSONObject validJson=new JSONObject(txtvalidJson);
-                    TxtWarn=(String.valueOf(validJson.get("TxtWarn")));
-                    String intresult=(String.valueOf(validJson.get("TxtResult")));
-                    if(intresult.equals("1")){
+                    JSONObject validJson = new JSONObject(txtvalidJson);
+                    TxtWarn = (String.valueOf(validJson.get("TxtWarn")));
+                    String intresult = (String.valueOf(validJson.get("TxtResult")));
+                    if (intresult.equals("1")) {
                         String txtGetDataJson = String.valueOf(validJson.get("TxtData"));
-                        JSONObject JsonDataTxtData=new JSONObject(txtGetDataJson);
+                        JSONObject JsonDataTxtData = new JSONObject(txtGetDataJson);
                         String txtMobile_trVisitPlan_Detail = String.valueOf(JsonDataTxtData.get("datMobile_trVisitPlan_Detail"));
-                        JSONArray JSONArraytxtMobile_trVisitPlan_Detail =new JSONArray(txtMobile_trVisitPlan_Detail);
+                        JSONArray JSONArraytxtMobile_trVisitPlan_Detail = new JSONArray(txtMobile_trVisitPlan_Detail);
                         for (int i = 0; i < JSONArraytxtMobile_trVisitPlan_Detail.length(); i++) {
                             JSONObject JSONdatMobile_trVisitPlan_Detail = JSONArraytxtMobile_trVisitPlan_Detail.getJSONObject(i);
-                            clsMobile_trVisitPlan_Detail _dt=new clsMobile_trVisitPlan_Detail();
-                            String txtGuidDetail=String.valueOf(JSONdatMobile_trVisitPlan_Detail.get("TxtGUI_Detail"));
-                            List<clsMobile_trVisitPlan_Detail> ListOfData=new Select().from(clsMobile_trVisitPlan_Detail.class).where(_dt.txtConsttxtGUI_Detail+"=?",txtGuidDetail).execute();
-                            if(ListOfData.size()>0){
-                                _dt=ListOfData.get(0);
-                                _dt.intSubmit="3";
-                                _dt.save();
+                            clsMobile_trVisitPlan_Detail _dt = new clsMobile_trVisitPlan_Detail();
+                            String txtGuidDetail = String.valueOf(JSONdatMobile_trVisitPlan_Detail.get("TxtGUI_Detail"));
+                            // List<clsMobile_trVisitPlan_Detail> ListOfData = new Select()
+                            // .from(clsMobile_trVisitPlan_Detail.class)
+                            // .where(_dt.txtConsttxtGUI_Detail + "=?", txtGuidDetail).execute();
+                            List<clsMobile_trVisitPlan_Detail> ListOfData = appDatabase.daoMobileTrVisitPlanDetail()
+                                    .getBytxtConsttxtGUI_Detail(txtGuidDetail);
+
+                            if (ListOfData.size() > 0) {
+                                _dt = ListOfData.get(0);
+                                _dt.intSubmit = "3";
+                                //_dt.save();
+//                                if (UtilFunc.isStringNotNull(_dt.txtGUI_Detail)) {
+//                                    appDatabase.daoMobileTrVisitPlanDetail().update(_dt);
+//                                } else {
+//                                    appDatabase.daoMobileTrVisitPlanDetail().insert(_dt);
+//                                }
+                                appDatabase.daoMobileTrVisitPlanDetail().insert(_dt);
                             }
-                            AsyncCallLogOut _AsyncCallLogOut=new AsyncCallLogOut();
+                            AsyncCallLogOut _AsyncCallLogOut = new AsyncCallLogOut(MainMenu.this);
                             _AsyncCallLogOut.execute();
 
                         }
-                    }else {
-                        _clsMainBL.showToastWarning(MainMenu.this,TxtWarn);
+                    } else {
+                        _clsMainBL.showToastWarning(MainMenu.this, TxtWarn);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -401,7 +456,7 @@ public class MainMenu extends clsMainAppCompatActivity implements View.OnClickLi
                 if (intProcesscancel == 1) {
                     onCancelled();
                 } else {
-                    _clsMainBL.showToastWarning(MainMenu.this,new clsWarning().txtConstErrorConnection);
+                    _clsMainBL.showToastWarning(MainMenu.this, new clsWarning().txtConstErrorConnection);
                     /*
                     Toast toast = Toast.makeText(getContext(), new clsWarning().txtConstErrorConnection,
                             Toast.LENGTH_LONG);
@@ -434,31 +489,47 @@ public class MainMenu extends clsMainAppCompatActivity implements View.OnClickLi
             Dialog.dismiss();
         }
     }
+
     private class AsyncCallLogOut extends AsyncTask<JSONObject, Void, JSONObject> {
+        private Context context;
+        private Activity activityThis;
+
+        public AsyncCallLogOut(Activity applicationContext) {
+            this.context = applicationContext.getApplicationContext();
+            this.activityThis = applicationContext;
+        }
+
         @Override
         protected JSONObject doInBackground(JSONObject... params) {
-            JSONObject JsonResult=null;
+            JSONObject JsonResult = null;
             JSONArray _JSONArray = null;
-            JSONObject JsonParam=new JSONObject();
-            _JSONArray=new JSONArray();
-            clsMobile_mVersionApp _clsMobile_mVersionApp=new clsMobile_mVersionApp();
-            List<clsMobile_mVersionApp> listOfclsMobile_mVersionApp= new Select().from(clsMobile_mVersionApp.class).where(_clsMobile_mVersionApp.txtConstidVersion+"=?",1).execute();
-            clsMobile_trUserLogin dtclsMobile_trUserLogin= new Mobile_trUserLoginBL().CheckUserLogin();
-            if(dtclsMobile_trUserLogin.txtUserID == null){
-                List<clsMobile_trUserLogin> ListOfUserLogin=new Select().from(clsMobile_trUserLogin.class).execute();
-                if(ListOfUserLogin.size()>0){
-                    dtclsMobile_trUserLogin=ListOfUserLogin.get(0);
+            JSONObject JsonParam = new JSONObject();
+            _JSONArray = new JSONArray();
+            clsMobile_mVersionApp _clsMobile_mVersionApp = new clsMobile_mVersionApp();
+            // List<clsMobile_mVersionApp> listOfclsMobile_mVersionApp = new Select()
+            // .from(clsMobile_mVersionApp.class).where(_clsMobile_mVersionApp.txtConstidVersion + "=?", 1).execute();
+            List<clsMobile_mVersionApp> listOfclsMobile_mVersionApp = appDatabase.daoMobileMVersionApp().getByIDVersion("1");
+
+            clsMobile_trUserLogin dtclsMobile_trUserLogin = new Mobile_trUserLoginBL().CheckUserLogin(getApplicationContext());
+            if (dtclsMobile_trUserLogin.txtUserID == null) {
+                // List<clsMobile_trUserLogin> ListOfUserLogin = new Select().from(clsMobile_trUserLogin.class).execute();
+                List<clsMobile_trUserLogin> ListOfUserLogin = appDatabase.daoMobileTrUserLogin().getAll();
+
+                if (ListOfUserLogin.size() > 0) {
+                    dtclsMobile_trUserLogin = ListOfUserLogin.get(0);
                 }
             }
-            clsMobile_UserJabatan _clsMobile_UserJabatan=new clsMobile_UserJabatan();
-            List<clsMobile_UserJabatan> LisOfjabatan=new Select().from(clsMobile_UserJabatan.class).where(_clsMobile_UserJabatan.txtConstBitPrimary+"=1").execute();
+            clsMobile_UserJabatan _clsMobile_UserJabatan = new clsMobile_UserJabatan();
+            // List<clsMobile_UserJabatan> LisOfjabatan = new Select().from(clsMobile_UserJabatan.class)
+            // .where(_clsMobile_UserJabatan.txtConstBitPrimary + "=1").execute();
+            List<clsMobile_UserJabatan> LisOfjabatan = appDatabase.daoMobileUserJabatan().getBytxtConstBitPrimary("1");
             try {
-                JsonParam.put("TxtGUI_trUserLogin",dtclsMobile_trUserLogin.txtGUI.toString());
-                JsonParam.put("TxtUserID",dtclsMobile_trUserLogin.txtUserID.toString());
-                JsonParam.put("TxtGUI_mVersionApp",listOfclsMobile_mVersionApp.get(0).txtGUI);
-                JsonParam.put("IntCabangID",dtclsMobile_trUserLogin.IntCabangID);
+                JsonParam.put("TxtGUI_trUserLogin", dtclsMobile_trUserLogin.txtGUI.toString());
+                JsonParam.put("TxtUserID", dtclsMobile_trUserLogin.txtUserID.toString());
+                JsonParam.put("TxtGUI_mVersionApp", listOfclsMobile_mVersionApp.get(0).txtGUI);
+                JsonParam.put("IntCabangID", dtclsMobile_trUserLogin.IntCabangID);
                 _JSONArray.put(JsonParam);
-                JsonResult=_clsMainBL.PushData("LogOut_J",_JSONArray.toString());
+                JsonResult = _clsMainBL.PushData("LogOut_J", _JSONArray.toString(), getApplicationContext());
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (Exception e) {
@@ -481,25 +552,24 @@ public class MainMenu extends clsMainAppCompatActivity implements View.OnClickLi
 
         @Override
         protected void onPostExecute(JSONObject JsonRes) {
-            if(_clsMainBL.ValidJSON(JsonRes)){
+            if (_clsMainBL.ValidJSON(JsonRes)) {
                 try {
-                    String txtvalidJson=(String.valueOf(JsonRes.get("validJson")));
-                    JSONObject validJson=new JSONObject(txtvalidJson);
-                    String intresult=(String.valueOf(validJson.get("TxtResult")));
-                    if(intresult.equals("1")){
-                        stopService(new Intent(getApplicationContext(), MyServiceNative.class));
-                        Intent myIntent = new Intent(MainMenu.this, ActivityFlash.class);
-                        new clsMainBL().DeleteData();
-                        finish();
-                        startActivity(myIntent);
+                    String txtvalidJson = (String.valueOf(JsonRes.get("validJson")));
+                    JSONObject validJson = new JSONObject(txtvalidJson);
+                    String intresult = (String.valueOf(validJson.get("TxtResult")));
+                    if (intresult.equals("1")) {
+                        context.stopService(new Intent(getApplicationContext(), MyServiceNative.class));
+                        Intent myIntent = new Intent(context, LoginActivity.class);
+                        new clsMainBL().DeleteData(MainMenu.this);
+                        activityThis.finish();
+                        context.startActivity(myIntent);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-            }
-            else{
-                _clsMainBL.showToast(MainMenu.this,new clsWarning().txtConstErrorConnection);
+            } else {
+                _clsMainBL.showToast(MainMenu.this, new clsWarning().txtConstErrorConnection);
             }
             Dialog.dismiss();
         }
@@ -523,6 +593,7 @@ public class MainMenu extends clsMainAppCompatActivity implements View.OnClickLi
         }
 
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -539,13 +610,14 @@ public class MainMenu extends clsMainAppCompatActivity implements View.OnClickLi
         );
         AppIndex.AppIndexApi.start(client, viewAction);
     }
+
     @Override
     @SuppressLint("NewApi")
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK) {
             Uri imageUri = CropImage.getPickImageResultUri(this, data);
-            CallPlanFragment dtCallPlanFragment= ((CallPlanFragment) getSupportFragmentManager().getFragments().get(0));
+            CallPlanFragment dtCallPlanFragment = ((CallPlanFragment) getSupportFragmentManager().getFragments().get(0));
             if (CropImage.isReadExternalStoragePermissionsRequired(this, imageUri)) {
                 requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE);
             } else {
@@ -555,11 +627,11 @@ public class MainMenu extends clsMainAppCompatActivity implements View.OnClickLi
                 startActivity(intent);
                 finish();
             }
-        } else if (requestCode==100 || requestCode == 130){
+        } else if (requestCode == 100 || requestCode == 130) {
             for (Fragment fragment : getSupportFragmentManager().getFragments()) {
-                if(fragment.toString().contains("CallPlanFragment")){
-                    CallPlanFragment dtCallPlanFragment= ((CallPlanFragment) fragment);
-                    if(dtCallPlanFragment!=null){
+                if (fragment.toString().contains("CallPlanFragment")) {
+                    CallPlanFragment dtCallPlanFragment = ((CallPlanFragment) fragment);
+                    if (dtCallPlanFragment != null) {
                         fragment.onActivityResult(requestCode, resultCode, data);
                         break;
                     }

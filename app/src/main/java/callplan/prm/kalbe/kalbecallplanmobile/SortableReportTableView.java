@@ -4,7 +4,8 @@ import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 
-import callplan.prm.kalbe.callplanlibrary.common.ReportTable;
+// import callplan.prm.kalbe.callplanlibrary.common.ReportTable;
+import callplan.prm.kalbe.kalbecallplanmobile.model.ReportTable;
 import de.codecrafters.tableview.SortableTableView;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 import de.codecrafters.tableview.toolkit.SortStateViewProviders;

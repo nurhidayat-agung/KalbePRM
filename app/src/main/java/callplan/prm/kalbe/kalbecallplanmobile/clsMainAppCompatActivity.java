@@ -18,15 +18,16 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Scanner;
 
-import callplan.prm.kalbe.callplanlibrary.ENUM.enum_mconfig;
+
 import callplan.prm.kalbe.kalbecallplanmobile.bl.Mobile_mConfigBL;
+import callplan.prm.kalbe.kalbecallplanmobile.roomenum.enum_mconfig;
 
 /**
  * Created by rhezaTesar on 9/8/2016.
  */
 
 public class clsMainAppCompatActivity extends AppCompatActivity {
-    public String txtVersionApp(){
+    public String txtVersionApp() {
         PackageInfo pInfo = null;
         try {
             pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
@@ -37,13 +38,14 @@ public class clsMainAppCompatActivity extends AppCompatActivity {
             return "No Version";
         }
     }
-    public String txtInfoVersionAndAPIApp(){
+
+    public String txtInfoVersionAndAPIApp() {
         PackageInfo pInfo = null;
         try {
-            Mobile_mConfigBL _Mobile_mConfigBL=new Mobile_mConfigBL();
-            String txtLink=_Mobile_mConfigBL.getValue(enum_mconfig.API.getValue());
+            Mobile_mConfigBL _Mobile_mConfigBL = new Mobile_mConfigBL();
+            String txtLink = _Mobile_mConfigBL.getValue(enum_mconfig.API.getValue(), getApplicationContext());
             pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-            return pInfo.versionName+System.getProperty ("line.separator")+txtLink.replace("/VisitPlan/API/VisitPlanAPI/","");
+            return pInfo.versionName + System.getProperty("line.separator") + txtLink.replace("/VisitPlan/API/VisitPlanAPI/", "");
         } catch (PackageManager.NameNotFoundException e2) {
             // TODO Auto-generated catch block
             e2.printStackTrace();

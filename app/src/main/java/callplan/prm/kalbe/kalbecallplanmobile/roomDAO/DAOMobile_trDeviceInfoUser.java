@@ -3,6 +3,7 @@ package callplan.prm.kalbe.kalbecallplanmobile.roomDAO;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -20,7 +21,7 @@ public interface DAOMobile_trDeviceInfoUser {
     @Query("SELECT * FROM Mobile_trDeviceInfoUser")
     List<clsMobile_trDeviceInfoUser> getAll();
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(clsMobile_trDeviceInfoUser deviceInfoUser);
 
     @Delete
@@ -29,4 +30,9 @@ public interface DAOMobile_trDeviceInfoUser {
     @Update
     void update(clsMobile_trDeviceInfoUser deviceInfoUser);
 
+    @Query("select * from mobile_trdeviceinfouser where idDevice = :idDevice")
+    List<clsMobile_trDeviceInfoUser> getbyId(int idDevice);
+
+    @Query("delete from Mobile_trDeviceInfoUser")
+    void deleteAll();
 }

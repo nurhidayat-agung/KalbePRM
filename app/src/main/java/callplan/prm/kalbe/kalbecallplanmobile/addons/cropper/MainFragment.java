@@ -13,9 +13,9 @@
 package callplan.prm.kalbe.kalbecallplanmobile.addons.cropper;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,19 +27,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.activeandroid.query.Select;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
 import java.util.List;
 
-import callplan.prm.kalbe.callplanlibrary.common.clsMobile_mBinaryFile;
+// import callplan.prm.kalbe.callplanlibrary.common.clsMobile_mBinaryFile;
 import callplan.prm.kalbe.kalbecallplanmobile.CropDisplayPicture;
 import callplan.prm.kalbe.kalbecallplanmobile.MainMenu;
 import callplan.prm.kalbe.kalbecallplanmobile.R;
 import callplan.prm.kalbe.kalbecallplanmobile.bl.clsMainBL;
+import callplan.prm.kalbe.kalbecallplanmobile.model.clsMobile_mBinaryFile;
+import callplan.prm.kalbe.kalbecallplanmobile.app.AppDatabase;
 
 /**
  * The fragment that will show the Image Cropping UI by requested preset.
@@ -205,7 +205,7 @@ public final class MainFragment extends Fragment
 
     @Override
     public void onCropImageComplete(CropImageView view, CropImageView.CropResult result) {
-        handleCropResult(result);
+        handleCropResult(result,getActivity());
     }
 
     @Override
@@ -213,12 +213,12 @@ public final class MainFragment extends Fragment
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            handleCropResult(result);
+            handleCropResult(result,getActivity());
         }
     }
 
-    private void handleCropResult(CropImageView.CropResult result) {
-
+    private void handleCropResult(CropImageView.CropResult result, Context context) {
+        AppDatabase appDatabase = AppDatabase.getDatabase(context);
         if (result.getError() == null) {
             Bitmap bitmap = Bitmap.createScaledBitmap(result.getBitmap(), 600, 600, true);
 
@@ -229,18 +229,19 @@ public final class MainFragment extends Fragment
             String txtBinaryImage1 = new clsMainBL().getStringFrombitmap(bitmap);
 
             clsMobile_mBinaryFile _clsMobile_mBinaryFile = new clsMobile_mBinaryFile();
-            List<clsMobile_mBinaryFile> ListOfclsMobile_mBinaryFile = new Select().from(clsMobile_mBinaryFile.class).where(_clsMobile_mBinaryFile.txtConsttxtGUI_IDTable + "=?", "1").execute();
+            // List<clsMobile_mBinaryFile> ListOfclsMobile_mBinaryFile = new Select().from(clsMobile_mBinaryFile.class).where(_clsMobile_mBinaryFile.txtConsttxtGUI_IDTable + "=?", "1").execute();
+            List<clsMobile_mBinaryFile> ListOfclsMobile_mBinaryFile = appDatabase.daoMobile_mBinaryFile().getbytxtGUI_IDTable();
 
             if(ListOfclsMobile_mBinaryFile.size() != 0){
                 _clsMobile_mBinaryFile = ListOfclsMobile_mBinaryFile.get(0);
-                _clsMobile_mBinaryFile.delete();
+                appDatabase.daoMobile_mBinaryFile().delete(_clsMobile_mBinaryFile);
             }
 
             _clsMobile_mBinaryFile = new clsMobile_mBinaryFile();
             _clsMobile_mBinaryFile.txtGUI_IDTable = "1";
             _clsMobile_mBinaryFile.txtFileName = "Display Picture";
             _clsMobile_mBinaryFile.txtBinary = txtBinaryImage1;
-            _clsMobile_mBinaryFile.save();
+            appDatabase.daoMobile_mBinaryFile().insert(_clsMobile_mBinaryFile);
 
 //            tDisplayPictureData tDisplayPictureData = new tDisplayPictureData();
 //            tDisplayPictureData.set_intID("1");

@@ -3,6 +3,7 @@ package callplan.prm.kalbe.kalbecallplanmobile.model;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 /**
@@ -27,6 +28,7 @@ public class clsMobile_UserJabatan {
 
     @ColumnInfo(name = "BitPrimary")
     public String BitPrimary;
+    @Ignore
     public final String txtConstBitPrimary = "BitPrimary";
 
     @ColumnInfo(name = "txtLimit")

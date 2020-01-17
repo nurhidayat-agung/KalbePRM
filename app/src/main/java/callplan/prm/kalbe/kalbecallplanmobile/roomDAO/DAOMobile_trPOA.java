@@ -3,6 +3,7 @@ package callplan.prm.kalbe.kalbecallplanmobile.roomDAO;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -20,7 +21,7 @@ public interface DAOMobile_trPOA {
     @Query("SELECT * FROM Mobile_trPOA")
     List<clsMobile_trPOA> getAll();
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(clsMobile_trPOA trPOA);
 
     @Delete
@@ -29,4 +30,15 @@ public interface DAOMobile_trPOA {
     @Update
     void update(clsMobile_trPOA trPOA);
 
+    @Query("select * from mobile_trpoa where txtNamaProgram like '%' || :toString || '%'")
+    List<clsMobile_trPOA> getLiketxtConsttxtNamaProgram(String toString);
+
+    @Query("select * from mobile_trpoa where intProgramID = :txtNoKode")
+    List<clsMobile_trPOA> getBytxtConstintProgramID(String txtNoKode);
+
+    @Query("select * from mobile_trpoa where intProgramID = :intProgramID")
+    List<clsMobile_trPOA> getBytxtConstintProgramID(Long intProgramID);
+
+    @Query("delete from mobile_trpoa")
+    void deleteAll();
 }

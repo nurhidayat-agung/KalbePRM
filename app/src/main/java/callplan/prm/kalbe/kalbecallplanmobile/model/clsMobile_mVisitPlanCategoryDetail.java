@@ -3,6 +3,7 @@ package callplan.prm.kalbe.kalbecallplanmobile.model;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 /**
@@ -16,17 +17,21 @@ public class clsMobile_mVisitPlanCategoryDetail {
     @NonNull
     @ColumnInfo(name = "intCategoryIDDetail")
     public Long intCategoryIDDetail;
+    @Ignore
     public final String txtConstintCategoryIDDetail  = "intCategoryIDDetail";
 
     @ColumnInfo(name = "intCategoryID")
     public Long intCategoryID;
+    @Ignore
     public final String txtConstintCategoryID  = "intCategoryID";
 
     @ColumnInfo(name = "IntJabatanID")
     public Long IntJabatanID;
+    @Ignore
     public final String txtConstIntJabatanID  = "IntJabatanID";
 
     @ColumnInfo(name = "IntBobot")
     public Long IntBobot;
+    @Ignore
     public final String txtConstIntBobot  = "IntBobot";
 }

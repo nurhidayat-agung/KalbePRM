@@ -3,6 +3,7 @@ package callplan.prm.kalbe.kalbecallplanmobile.roomDAO;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -21,7 +22,7 @@ public interface DAOMobile_mLOB {
     @Query("SELECT * FROM mLOB")
     List<clsMobile_mLOB> getAll();
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(clsMobile_mLOB mLOB);
 
     @Delete
@@ -29,4 +30,11 @@ public interface DAOMobile_mLOB {
 
     @Update
     void update(clsMobile_mLOB mLOB);
+
+    @Query("select * from mlob where intLOBID = :intLOBID")
+    List<clsMobile_mLOB> gettxtConstintLOBID(Long intLOBID);
+
+    @Query("delete from mlob")
+    void delete();
+
 }

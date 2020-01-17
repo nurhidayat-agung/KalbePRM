@@ -3,6 +3,7 @@ package callplan.prm.kalbe.kalbecallplanmobile.roomDAO;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -19,7 +20,10 @@ public interface DAOMobile_mBinaryFile {
     @Query("SELECT * FROM Mobile_mBinaryFile")
     List<clsMobile_mBinaryFile> getAll();
 
-    @Insert
+    @Query("select * from mobile_mbinaryfile where txtGUI_IDTable = 1")
+    List<clsMobile_mBinaryFile> getbytxtGUI_IDTable();
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(clsMobile_mBinaryFile file);
 
     @Delete
@@ -28,4 +32,15 @@ public interface DAOMobile_mBinaryFile {
     @Update
     void update(clsMobile_mBinaryFile file);
 
+    @Query("select * from mobile_mbinaryfile where txtGUI_IDTable like :GUI_IDTable and txtFileName like :FileName")
+    List<clsMobile_mBinaryFile> getByGUI_IDTablenFileName(String GUI_IDTable, String FileName);
+
+    @Query("select * from mobile_mbinaryfile where txtGUI_IDTable like :s and txtFileName like :s1")
+    List<clsMobile_mBinaryFile> getbyGUI_IDTableFileName(String s, String s1);
+
+    @Query("select * from mobile_mbinaryfile where txtGUI_IDTable = :txtGUI_detail_item")
+    List<clsMobile_mBinaryFile> getbytxtGUI_IDTable(String txtGUI_detail_item);
+
+    @Query("delete from mobile_mbinaryfile where txtGUI_IDTable != :i")
+    void deleteEx(String i);
 }

@@ -3,6 +3,7 @@ package callplan.prm.kalbe.kalbecallplanmobile.roomDAO;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -20,7 +21,7 @@ public interface DAOMobile_TipeSumberData {
     @Query("SELECT * FROM mTipeSumberData")
     List<clsMobile_TipeSumberData> getAll();
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(clsMobile_TipeSumberData tipeSumberData);
 
     @Delete
@@ -29,4 +30,9 @@ public interface DAOMobile_TipeSumberData {
     @Update
     void update(clsMobile_TipeSumberData tipeSumberData);
 
+    @Query("select * from mtipesumberdata where txtSumberDataID like :toString")
+    List<clsMobile_TipeSumberData> gettxtSumberDataID(String toString);
+
+    @Query("delete from mtipesumberdata")
+    void delete();
 }

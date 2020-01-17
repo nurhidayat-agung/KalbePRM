@@ -3,6 +3,7 @@ package callplan.prm.kalbe.kalbecallplanmobile.roomDAO;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -20,7 +21,7 @@ public interface DAOMobile_UserJabatan {
     @Query("SELECT * FROM Mobile_UserJabatan")
     List<clsMobile_UserJabatan> getAll();
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(clsMobile_UserJabatan visitPlanHeader);
 
     @Delete
@@ -29,4 +30,9 @@ public interface DAOMobile_UserJabatan {
     @Update
     void update(clsMobile_UserJabatan visitPlanHeader);
 
+    @Query("select * from mobile_userjabatan where BitPrimary like :bitPrimary")
+    List<clsMobile_UserJabatan> getBytxtConstBitPrimary(String bitPrimary);
+
+    @Query("delete from mobile_userjabatan")
+    void deleteAll();
 }

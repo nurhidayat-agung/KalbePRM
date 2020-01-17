@@ -2,7 +2,6 @@ package callplan.prm.kalbe.kalbecallplanmobile;
 
 import android.app.Application;
 
-import com.activeandroid.ActiveAndroid;
 import com.crashlytics.android.Crashlytics;
 
 import io.fabric.sdk.android.Fabric;
@@ -14,7 +13,7 @@ public class AppVisitPlan extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        ActiveAndroid.initialize(this);
+        // ActiveAndroid.initialize(this);
         Fabric fabric = new Fabric.Builder(this)
                 .kits(new Crashlytics())
                 .debuggable(true)

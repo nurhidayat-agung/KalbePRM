@@ -48,15 +48,12 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.activeandroid.query.Select;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -85,30 +82,52 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import callplan.prm.kalbe.callplanlibrary.ENUM.enum_VisitPlanCategory;
-import callplan.prm.kalbe.callplanlibrary.ENUM.enum_mconfig;
-import callplan.prm.kalbe.callplanlibrary.common.clsHardCode;
-import callplan.prm.kalbe.callplanlibrary.common.clsMobile_MBranch;
-import callplan.prm.kalbe.callplanlibrary.common.clsMobile_MPartnerProfile;
-import callplan.prm.kalbe.callplanlibrary.common.clsMobile_MPartnerProfileAlias;
-import callplan.prm.kalbe.callplanlibrary.common.clsMobile_UserJabatan;
-import callplan.prm.kalbe.callplanlibrary.common.clsMobile_ValidationNo;
-import callplan.prm.kalbe.callplanlibrary.common.clsMobile_mBinaryFile;
-import callplan.prm.kalbe.callplanlibrary.common.clsMobile_mConfig;
-import callplan.prm.kalbe.callplanlibrary.common.clsMobile_mLOB;
-import callplan.prm.kalbe.callplanlibrary.common.clsMobile_mVersionApp;
-import callplan.prm.kalbe.callplanlibrary.common.clsMobile_mVisitPlanCategory;
-import callplan.prm.kalbe.callplanlibrary.common.clsMobile_mVisitPlanCategoryDetail;
-import callplan.prm.kalbe.callplanlibrary.common.clsMobile_trPOA;
-import callplan.prm.kalbe.callplanlibrary.common.clsMobile_trUserLogin;
-import callplan.prm.kalbe.callplanlibrary.common.clsMobile_trVisitPlan_Detail;
-import callplan.prm.kalbe.callplanlibrary.common.clsMobile_trVisitPlan_Detail_Item;
-import callplan.prm.kalbe.callplanlibrary.common.clsMobile_trVisitPlan_Header;
-import callplan.prm.kalbe.callplanlibrary.common.clsSpinner;
-import callplan.prm.kalbe.callplanlibrary.common.clsWarning;
+//import callplan.prm.kalbe.callplanlibrary.ENUM.enum_VisitPlanCategory;
+//import callplan.prm.kalbe.callplanlibrary.ENUM.enum_mconfig;
+//import callplan.prm.kalbe.callplanlibrary.common.clsHardCode;
+//import callplan.prm.kalbe.callplanlibrary.common.clsMobile_MBranch;
+//import callplan.prm.kalbe.callplanlibrary.common.clsMobile_MPartnerProfile;
+//import callplan.prm.kalbe.callplanlibrary.common.clsMobile_MPartnerProfileAlias;
+//import callplan.prm.kalbe.callplanlibrary.common.clsMobile_UserJabatan;
+//import callplan.prm.kalbe.callplanlibrary.common.clsMobile_ValidationNo;
+//import callplan.prm.kalbe.callplanlibrary.common.clsMobile_mBinaryFile;
+//import callplan.prm.kalbe.callplanlibrary.common.clsMobile_mConfig;
+//import callplan.prm.kalbe.callplanlibrary.common.clsMobile_mLOB;
+//import callplan.prm.kalbe.callplanlibrary.common.clsMobile_mVersionApp;
+//import callplan.prm.kalbe.callplanlibrary.common.clsMobile_mVisitPlanCategory;
+//import callplan.prm.kalbe.callplanlibrary.common.clsMobile_mVisitPlanCategoryDetail;
+//import callplan.prm.kalbe.callplanlibrary.common.clsMobile_trPOA;
+//import callplan.prm.kalbe.callplanlibrary.common.clsMobile_trUserLogin;
+//import callplan.prm.kalbe.callplanlibrary.common.clsMobile_trVisitPlan_Detail;
+//import callplan.prm.kalbe.callplanlibrary.common.clsMobile_trVisitPlan_Detail_Item;
+//import callplan.prm.kalbe.callplanlibrary.common.clsMobile_trVisitPlan_Header;
+//import callplan.prm.kalbe.callplanlibrary.common.clsSpinner;
+//import callplan.prm.kalbe.callplanlibrary.common.clsWarning;
 import callplan.prm.kalbe.kalbecallplanmobile.bl.Mobile_mConfigBL;
 import callplan.prm.kalbe.kalbecallplanmobile.bl.Mobile_trUserLoginBL;
 import callplan.prm.kalbe.kalbecallplanmobile.bl.clsMainBL;
+import callplan.prm.kalbe.kalbecallplanmobile.model.clsHardCode;
+import callplan.prm.kalbe.kalbecallplanmobile.model.clsMobile_MBranch;
+import callplan.prm.kalbe.kalbecallplanmobile.model.clsMobile_MPartnerProfile;
+import callplan.prm.kalbe.kalbecallplanmobile.model.clsMobile_MPartnerProfileAlias;
+import callplan.prm.kalbe.kalbecallplanmobile.model.clsMobile_UserJabatan;
+import callplan.prm.kalbe.kalbecallplanmobile.model.clsMobile_ValidationNo;
+import callplan.prm.kalbe.kalbecallplanmobile.model.clsMobile_mBinaryFile;
+import callplan.prm.kalbe.kalbecallplanmobile.model.clsMobile_mConfig;
+import callplan.prm.kalbe.kalbecallplanmobile.model.clsMobile_mLOB;
+import callplan.prm.kalbe.kalbecallplanmobile.model.clsMobile_mVersionApp;
+import callplan.prm.kalbe.kalbecallplanmobile.model.clsMobile_mVisitPlanCategory;
+import callplan.prm.kalbe.kalbecallplanmobile.model.clsMobile_mVisitPlanCategoryDetail;
+import callplan.prm.kalbe.kalbecallplanmobile.model.clsMobile_trPOA;
+import callplan.prm.kalbe.kalbecallplanmobile.model.clsMobile_trUserLogin;
+import callplan.prm.kalbe.kalbecallplanmobile.model.clsMobile_trVisitPlan_Detail;
+import callplan.prm.kalbe.kalbecallplanmobile.model.clsMobile_trVisitPlan_Detail_Item;
+import callplan.prm.kalbe.kalbecallplanmobile.model.clsMobile_trVisitPlan_Header;
+import callplan.prm.kalbe.kalbecallplanmobile.model.clsSpinner;
+import callplan.prm.kalbe.kalbecallplanmobile.model.clsWarning;
+import callplan.prm.kalbe.kalbecallplanmobile.app.AppDatabase;
+import callplan.prm.kalbe.kalbecallplanmobile.roomenum.enum_VisitPlanCategory;
+import callplan.prm.kalbe.kalbecallplanmobile.roomenum.enum_mconfig;
 import kalbenutritionals.bridgeapi.BridgeAPI;
 import kalbenutritionals.bridgeapi.common.clsDataLogin;
 
@@ -136,6 +155,7 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
     public CallPlanFragment(String txtGUI_detail) {
         Id = txtGUI_detail;
     }
+
     private String mCurrentPhotoPath;
     private TextInputLayout input_layout_poa_search, input_layout_outlet_search, textDescription, textPreNC, textBobot;
     private LinearLayout lnOutletLocation;
@@ -226,12 +246,13 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
     List<clsSpinner> listSpinnermVisitPlanCategory = null;
     List<clsSpinner> listSpinnerLOB = null;
     List<clsSpinner> listSpinnerOutletAlias = null;
-    List<clsSpinner> listSpinnerNoRealiasasi=null;
+    List<clsSpinner> listSpinnerNoRealiasasi = null;
     clsMobile_MPartnerProfile _clsMobile_MPartnerProfile;
     android.support.v7.app.AlertDialog alertD;
-    List<clsMobile_ValidationNo> ListOfclsMobile_ValidationNoe=null;
+    List<clsMobile_ValidationNo> ListOfclsMobile_ValidationNoe = null;
     ListView listData;
     View viewListEmpty;
+    private AppDatabase appDatabase;
 
     public Location getLocation() {
         try {
@@ -245,12 +266,12 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
             // getting network status
             boolean isNetworkEnabled = locationManager
                     .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-            boolean canGetLocation=false;
+            boolean canGetLocation = false;
             Location location = null;
 
             if (!isGPSEnabled && !isNetworkEnabled) {
                 // no network provider is enabled
-                new clsMainBL().showToastWarning(getContext(), "Aktifkan Mode GPS!!" );
+                new clsMainBL().showToastWarning(getContext(), "Aktifkan Mode GPS!!");
             } else {
                 canGetLocation = true;
                 if (isNetworkEnabled) {
@@ -277,7 +298,7 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                         locationManager.requestLocationUpdates(
                                 LocationManager.GPS_PROVIDER,
                                 1000,
-                                0,  this);
+                                0, this);
                         Log.d("GPS", "GPS Enabled");
                         if (locationManager != null) {
                             location = locationManager
@@ -301,23 +322,26 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_call_plan_new, container, false);
+        appDatabase = AppDatabase.getDatabase(getContext());
         _clsWarning = new clsWarning();
         _clsMainBL = new clsMainBL();
-        txtHDLati=(TextView)  v.findViewById(R.id.txtHDLati);
-        txtHDLong=(TextView)  v.findViewById(R.id.txtHDLong);
-        txtHDActualDate=(TextView)  v.findViewById(R.id.txtHDActualDate);
-        llimgview=(LinearLayout)  v.findViewById(R.id.llimgview);
+        txtHDLati = (TextView) v.findViewById(R.id.txtHDLati);
+        txtHDLong = (TextView) v.findViewById(R.id.txtHDLong);
+        txtHDActualDate = (TextView) v.findViewById(R.id.txtHDActualDate);
+        llimgview = (LinearLayout) v.findViewById(R.id.llimgview);
         btnRefreshMaps = (Button) v.findViewById(R.id.btnRefreshMaps);
-        btnEDetailing= (Button) v.findViewById(R.id.btnEDetailing);
+        btnEDetailing = (Button) v.findViewById(R.id.btnEDetailing);
         cbFullDay = (CheckBox) v.findViewById(R.id.cbFullDay);
         btnPopupMap = (Button) v.findViewById(R.id.viewMap);
         btnCheckIn = (Button) v.findViewById(R.id.buttonCheckIn);
         imgPrevNoImg1 = (ImageView) v.findViewById(R.id.imageViewCamera1);
         imgPrevNoImg2 = (ImageView) v.findViewById(R.id.imageViewCamera2);
-        tvTypeOutlet = (TextView) v.findViewById(R.id.tvTypeOutlet);;
-        spnOutletAlias= (Spinner) v.findViewById(R.id.spnOutletAlias);;
+        tvTypeOutlet = (TextView) v.findViewById(R.id.tvTypeOutlet);
+        ;
+        spnOutletAlias = (Spinner) v.findViewById(R.id.spnOutletAlias);
+        ;
         //spnNoRealisasi = (Spinner) v.findViewById(R.id.spnNoRealisasi);
-        etRealisasi= (EditText) v.findViewById(R.id.etRealisasi);
+        etRealisasi = (EditText) v.findViewById(R.id.etRealisasi);
         lblLong = (TextView) v.findViewById(R.id.tvLong);
         lblLang = (TextView) v.findViewById(R.id.tvLat);
         tvViewDate = (TextView) v.findViewById(R.id.tvViewDate);
@@ -331,8 +355,8 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
         etBobot = (EditText) v.findViewById(R.id.etBobot);
         etPreNC = (EditText) v.findViewById(R.id.etPreNC);
         etPOA = (EditText) v.findViewById(R.id.etPOA);
-        trLocation= (RelativeLayout) v.findViewById(R.id.trLocation);
-        RLPreNC= (RelativeLayout) v.findViewById(R.id.RLPreNC);
+        trLocation = (RelativeLayout) v.findViewById(R.id.trLocation);
+        RLPreNC = (RelativeLayout) v.findViewById(R.id.RLPreNC);
         //trLong = (TableRow) v.findViewById(R.id.trLong);
         //trLati = (TableRow) v.findViewById(R.id.trLati);
         //trAcc = (TableRow) v.findViewById(R.id.trAcc);
@@ -354,21 +378,26 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
 
         txtHDId.setText(Id);
         tvAddInformation = (EditText) v.findViewById(R.id.tvAddInformation);
-        ListOfclsMobile_mLOB = new Select().from(clsMobile_mLOB.class).execute();
-        ListOfclsMobile_MBranch = new Select().from(clsMobile_MBranch.class).execute();
-        ListOfclsMobile_mVisitPlanCategory = new Select().from(clsMobile_mVisitPlanCategory.class).execute();
-        ListOfclsMobile_trPOA = new Select().from(clsMobile_trPOA.class).execute();
-        etDatePlan.setText(_clsMainBL.GetDateNowFromLogin());
-        tvViewDate.setText(_clsMainBL.GetDateNowFromLogin());
+        // ListOfclsMobile_mLOB = new Select().from(clsMobile_mLOB.class).execute();
+        ListOfclsMobile_mLOB = appDatabase.daoMobileMLOB().getAll();
+        // ListOfclsMobile_MBranch = new Select().from(clsMobile_MBranch.class).execute();
+        ListOfclsMobile_MBranch = appDatabase.daoMobileMBranch().getAll();
+        // ListOfclsMobile_mVisitPlanCategory = new Select().from(clsMobile_mVisitPlanCategory.class).execute();
+        ListOfclsMobile_mVisitPlanCategory = appDatabase.daoMobileMVisitPlanCategory().getAll();
+        // ListOfclsMobile_trPOA = new Select().from(clsMobile_trPOA.class).execute();
+        ListOfclsMobile_trPOA = appDatabase.daoMobileTrPOA().getAll();
+        etDatePlan.setText(_clsMainBL.GetDateNowFromLogin(getContext()));
+        tvViewDate.setText(_clsMainBL.GetDateNowFromLogin(getContext()));
         etDatePlan.setEnabled(false);
         etBobot.setEnabled(false);
         //spnNoRealisasi.setAdapter(null);
         spnLOB.setAdapter(null);
         spnBranch.setAdapter(null);
         spnCategory.setAdapter(null);
-        etDesc.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
-        clsMobile_ValidationNo _clsMobile_ValidationNo=new clsMobile_ValidationNo();
-        ListOfclsMobile_ValidationNoe=new Select().from(clsMobile_ValidationNo.class).where(_clsMobile_ValidationNo.txtConstBitUse+"=?",0).execute();
+        etDesc.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
+        clsMobile_ValidationNo _clsMobile_ValidationNo = new clsMobile_ValidationNo();
+        // ListOfclsMobile_ValidationNoe = new Select().from(clsMobile_ValidationNo.class).where(_clsMobile_ValidationNo.txtConstBitUse + "=?", 0).execute();
+        ListOfclsMobile_ValidationNoe = appDatabase.daoMobileValidationNo().getBytxtConstBitUse("0");
         /*
         if(ListOfclsMobile_ValidationNoe.size()>0){
             listSpinnerNoRealiasasi=new ArrayList<>();
@@ -422,24 +451,24 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //_clsMainBL.showToast(getContext(),spnOutletAlias.getSelectedItem().toString()) ;
-                if(ListOfclsMobile_MPartnerProfileAliasSearch!=null){
-                    for (clsMobile_MPartnerProfileAlias dtclsMobile_MPartnerProfileAlias:ListOfclsMobile_MPartnerProfileAliasSearch) {
-                        if(spnOutletAlias.getSelectedItem().toString().equals(dtclsMobile_MPartnerProfileAlias.txtPartnerCRM+" - "+dtclsMobile_MPartnerProfileAlias.txtNamaPartner)){
-                            String txtLatitudeKNIS=null;
-                            String txtLongitudeKNIS=null;
-                            txtIdOutletAlias=dtclsMobile_MPartnerProfileAlias.IntPartnerID.toString();
-                            txtLatitudeKNIS=dtclsMobile_MPartnerProfileAlias.txtLatitude;
-                            txtLongitudeKNIS=dtclsMobile_MPartnerProfileAlias.txtLongitude;
-                            if(txtLatitudeKNIS==null||txtLatitudeKNIS.equals("null")){
-                                txtLatitudeKNIS="No Location";
+                if (ListOfclsMobile_MPartnerProfileAliasSearch != null) {
+                    for (clsMobile_MPartnerProfileAlias dtclsMobile_MPartnerProfileAlias : ListOfclsMobile_MPartnerProfileAliasSearch) {
+                        if (spnOutletAlias.getSelectedItem().toString().equals(dtclsMobile_MPartnerProfileAlias.txtPartnerCRM + " - " + dtclsMobile_MPartnerProfileAlias.txtNamaPartner)) {
+                            String txtLatitudeKNIS = null;
+                            String txtLongitudeKNIS = null;
+                            txtIdOutletAlias = dtclsMobile_MPartnerProfileAlias.IntPartnerID.toString();
+                            txtLatitudeKNIS = dtclsMobile_MPartnerProfileAlias.txtLatitude;
+                            txtLongitudeKNIS = dtclsMobile_MPartnerProfileAlias.txtLongitude;
+                            if (txtLatitudeKNIS == null || txtLatitudeKNIS.equals("null")) {
+                                txtLatitudeKNIS = "No Location";
                                 txtHDLati.setText("");
-                            }else{
+                            } else {
                                 txtHDLati.setText(txtLatitudeKNIS);
                             }
-                            if(txtLongitudeKNIS==null||txtLongitudeKNIS.equals("null")){
-                                txtLongitudeKNIS="No Location";
+                            if (txtLongitudeKNIS == null || txtLongitudeKNIS.equals("null")) {
+                                txtLongitudeKNIS = "No Location";
                                 txtHDLong.setText("");
-                            }else{
+                            } else {
                                 txtHDLong.setText(txtLongitudeKNIS);
                             }
                             tvLatKNIS.setText("Lati : " + txtLatitudeKNIS);
@@ -489,23 +518,26 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
         spnCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(Id.equals("")){
+                if (Id.equals("")) {
                     clsSpinner _clsSpinner = (clsSpinner) parent.getSelectedItem();
                     txtIdCategory = _clsSpinner.getID();
                     clsMobile_mVisitPlanCategory _clsMobile_mVisitPlanCategory = new clsMobile_mVisitPlanCategory();
-                    List<clsMobile_mVisitPlanCategory> ListCategoryPlan = new Select().from(clsMobile_mVisitPlanCategory.class).where(_clsMobile_mVisitPlanCategory.txtConstintCategoryID + "=?", txtIdCategory).execute();
+
+                    // List<clsMobile_mVisitPlanCategory> ListCategoryPlan = new Select().from(clsMobile_mVisitPlanCategory.class).where(_clsMobile_mVisitPlanCategory.txtConstintCategoryID + "=?", txtIdCategory).execute();
+                    List<clsMobile_mVisitPlanCategory> ListCategoryPlan = appDatabase.daoMobileMVisitPlanCategory().getBytxtConstintCategoryID(txtIdCategory);
+
                     int Bobot = Integer.valueOf(ListCategoryPlan.get(0).intNilaiBobot + "");
                     dtclsMobile_MPartnerProfile = null;
                     etBobot.setText(Bobot + "");
 
-                    dtclsMobile_MPartnerProfile=null;
-                    dtclsMobile_trPOA=null;
+                    dtclsMobile_MPartnerProfile = null;
+                    dtclsMobile_trPOA = null;
                     if (ListCategoryPlan.size() > 0) {
                         if (ListCategoryPlan.get(0).bitFullDay == 1) {
-                            if(Id.equals("")){
+                            if (Id.equals("")) {
                                 cbFullDay.setEnabled(true);
                                 cbFullDay.setClickable(true);
-                            }else{
+                            } else {
                                 cbFullDay.setEnabled(false);
                                 cbFullDay.setClickable(false);
                             }
@@ -522,19 +554,19 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
 
                     etBobot.setText(GetBobot());
 
-                    if (txtIdCategory.equals(enum_VisitPlanCategory.OUTLET.getValue()+"")) {
+                    if (txtIdCategory.equals(enum_VisitPlanCategory.OUTLET.getValue() + "")) {
                         tvDistance.setText("0");
                         input_layout_outlet_search.setVisibility(View.VISIBLE);
                         input_layout_poa_search.setVisibility(View.GONE);
                         lnOutletLocation.setVisibility(View.VISIBLE);
 
-                    } else if (txtIdCategory.equals(enum_VisitPlanCategory.ACTIVITY.getValue()+"")) {
+                    } else if (txtIdCategory.equals(enum_VisitPlanCategory.ACTIVITY.getValue() + "")) {
                         tvDistance.setText("0");
                         RLPreNC.setVisibility(View.VISIBLE);
                         input_layout_poa_search.setVisibility(View.VISIBLE);
                         input_layout_outlet_search.setVisibility(View.GONE);
                         lnOutletLocation.setVisibility(View.GONE);
-                    }else if(txtIdCategory.equals(enum_VisitPlanCategory.CUTI.getValue()+"")||txtIdCategory.equals(enum_VisitPlanCategory.PERJALANAN_DINAS.getValue()+"")){
+                    } else if (txtIdCategory.equals(enum_VisitPlanCategory.CUTI.getValue() + "") || txtIdCategory.equals(enum_VisitPlanCategory.PERJALANAN_DINAS.getValue() + "")) {
                         ShowForLocationAndPhoto(false);
                         input_layout_outlet_search.setVisibility(View.GONE);
                         input_layout_poa_search.setVisibility(View.GONE);
@@ -580,9 +612,9 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
 
         etOutletName.setOnTouchListener(new DrawableClickListener.RightDrawableClickListener(etPOA) {
             public boolean onDrawableClick() {
-                if(etOutletName.getText().length()>=3){
+                if (etOutletName.getText().length() >= 3) {
                     searchOutlet();
-                }else{
+                } else {
                     _clsMainBL.showToastWarning(getContext(), "Isi Minimal 3 karakter");
                     etOutletName.requestFocus();
                 }
@@ -592,9 +624,9 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
         etOutletName.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_DPAD_CENTER)) {
-                    if(etOutletName.getText().length()>=3){
+                    if (etOutletName.getText().length() >= 3) {
                         searchOutlet();
-                    }else{
+                    } else {
                         _clsMainBL.showToastWarning(getContext(), "Isi Minimal 3 karakter");
                         etOutletName.requestFocus();
                     }
@@ -603,7 +635,6 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                 return false;
             }
         });
-
 
 
         if (!isDeviceSupportCamera()) {
@@ -628,28 +659,34 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
             @Override
             public void onClick(View v) {
                 BridgeAPI bridgeAPI = new BridgeAPI();
-                clsMobile_mConfig _clsMobile_mConfig=new clsMobile_mConfig();
-                List<clsMobile_mConfig> ListOfclsMobile_mConfig = new Select().from(clsMobile_mConfig.class).where("idConfig=?",9).execute();
-                if(ListOfclsMobile_mConfig.size()>0){
+                clsMobile_mConfig _clsMobile_mConfig = new clsMobile_mConfig();
+
+                // List<clsMobile_mConfig> ListOfclsMobile_mConfig = new Select().from(clsMobile_mConfig.class).where("idConfig=?", 9).execute();
+                List<clsMobile_mConfig> ListOfclsMobile_mConfig = appDatabase.daoMobileMConfig().getbyIdConfig(9);
+
+                if (ListOfclsMobile_mConfig.size() > 0) {
                     //Boolean status = bridgeAPI.checkInstalledApplication(MainMenu.this, "kalbenutritionals.testjar");
                     Boolean status = bridgeAPI.checkInstalledApplication(getActivity(), "com.edetailing");
-                    if(status){
-                        List<clsMobile_trUserLogin> dataLogin = new Select().from(clsMobile_trUserLogin.class).execute();
-                        if(dataLogin.size()>0){
-                            clsDataLogin dtUser = new clsMainBL().getDataLogin();
-                            String txtIDDetailing="0";
+                    if (status) {
+
+                        /// List<clsMobile_trUserLogin> dataLogin = new Select().from(clsMobile_trUserLogin.class).execute();
+                        List<clsMobile_trUserLogin> dataLogin = appDatabase.daoMobileTrUserLogin().getAll();
+
+                        if (dataLogin.size() > 0) {
+                            clsDataLogin dtUser = new clsMainBL().getDataLogin(getActivity());
+                            String txtIDDetailing = "0";
                             if (Id.equals("") == false) {
-                                txtIDDetailing= dtclsMobile_trVisitPlan_Detail.intVisitPlan_DetailID.toString();
+                                txtIDDetailing = dtclsMobile_trVisitPlan_Detail.intVisitPlan_DetailID.toString();
                             }
-                            bridgeAPI.intentWithPackageName(getActivity(), "com.edetailing","com.edetailing.MainActivity", dtUser, txtIDDetailing);
-                        }else{
-                            new clsMainBL().showToastWarning(getActivity(),"user login null, please contact admin PRM!!");
+                            bridgeAPI.intentWithPackageName(getActivity(), "com.edetailing", "com.edetailing.MainActivity", dtUser, txtIDDetailing);
+                        } else {
+                            new clsMainBL().showToastWarning(getActivity(), "user login null, please contact admin PRM!!");
                         }
-                    }else{
-                        new clsMainBL().showToastWarning(getActivity(),"please installed Application E Detailing!!");
+                    } else {
+                        new clsMainBL().showToastWarning(getActivity(), "please installed Application E Detailing!!");
                     }
-                }else{
-                    new clsMainBL().showToastWarning(getActivity(),"Name App E Detailing is null. please contact Admin PRM!!");
+                } else {
+                    new clsMainBL().showToastWarning(getActivity(), "Name App E Detailing is null. please contact Admin PRM!!");
                 }
             }
         });
@@ -683,47 +720,55 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                                 textDescription.setErrorEnabled(false);
                                 textPreNC.setErrorEnabled(false);
                                 textBobot.setErrorEnabled(false);
-                                clsMobile_ValidationNo _clsMobile_ValidationNo=new clsMobile_ValidationNo();
+                                clsMobile_ValidationNo _clsMobile_ValidationNo = new clsMobile_ValidationNo();
 
                                 clsMobile_trVisitPlan_Header _clsMobile_trVisitPlan_Header = new clsMobile_trVisitPlan_Header();
-                                List<clsMobile_trVisitPlan_Header> ListOfHeaderActive = new Select().from(clsMobile_trVisitPlan_Header.class).where(_clsMobile_trVisitPlan_Header.txtConstintActivePeriode + "=1").execute();
+                                // List<clsMobile_trVisitPlan_Header> ListOfHeaderActive = new Select().from(clsMobile_trVisitPlan_Header.class).where(_clsMobile_trVisitPlan_Header.txtConstintActivePeriode + "=1").execute();
+                                List<clsMobile_trVisitPlan_Header> ListOfHeaderActive = appDatabase.daoMobileTrVisitPlanHeader().getByActivePeriode("1");
 
-                                List<clsMobile_ValidationNo> ListOfCheckData=null;
-                                String strErrorValidationNo="";
-                                ListOfCheckData=new Select().from(clsMobile_ValidationNo.class).where(_clsMobile_ValidationNo.txtConsttxtValidationNo+"='"+etRealisasi.getText().toString()+"'").execute();
-                                if(ListOfCheckData.size()==0){
-                                    strErrorValidationNo="Validation_No_Invalid";
-                                }else{
-                                    ListOfCheckData=new Select().from(clsMobile_ValidationNo.class).where(_clsMobile_ValidationNo.txtConsttxtValidationNo+"='"+etRealisasi.getText().toString()+"' AND "+_clsMobile_ValidationNo.txtConstBitUse+"=0").execute();
-                                    if(ListOfCheckData.size()==0){
-                                        strErrorValidationNo="Validation_No_Not_Available";
+                                List<clsMobile_ValidationNo> ListOfCheckData = null;
+                                String strErrorValidationNo = "";
+
+                                // ListOfCheckData = new Select().from(clsMobile_ValidationNo.class).where(_clsMobile_ValidationNo.txtConsttxtValidationNo + "='" + etRealisasi.getText().toString() + "'").execute();
+                                ListOfCheckData = appDatabase.daoMobileValidationNo().getbyConsttxtValidationNo(etRealisasi.getText().toString());
+
+
+                                if (ListOfCheckData.size() == 0) {
+                                    strErrorValidationNo = "Validation_No_Invalid";
+                                } else {
+
+                                    // ListOfCheckData = new Select().from(clsMobile_ValidationNo.class).where(_clsMobile_ValidationNo.txtConsttxtValidationNo + "='" + etRealisasi.getText().toString() + "' AND " + _clsMobile_ValidationNo.txtConstBitUse + "=0").execute();
+                                    ListOfCheckData = appDatabase.daoMobileValidationNo().getbyValidationNoBitUse(etRealisasi.getText().toString(), "0");
+
+                                    if (ListOfCheckData.size() == 0) {
+                                        strErrorValidationNo = "Validation_No_Not_Available";
                                     }
                                 }
-                                if(strErrorValidationNo.equals("")==false){
-                                    if(strErrorValidationNo.equals("Validation_No_Invalid")){
-                                        strWarning="Validasi Tidak Valid";
+                                if (strErrorValidationNo.equals("") == false) {
+                                    if (strErrorValidationNo.equals("Validation_No_Invalid")) {
+                                        strWarning = "Validasi Tidak Valid";
                                         etRealisasi.setError(strWarning);
-                                    }else if(strErrorValidationNo.equals("Validation_No_Not_Available")){
-                                        strWarning="Validasi Sudah Digunakan";
+                                    } else if (strErrorValidationNo.equals("Validation_No_Not_Available")) {
+                                        strWarning = "Validasi Sudah Digunakan";
                                         etRealisasi.setError(strWarning);
                                     }
                                     etRealisasi.requestFocus();
-                                }else if (txtPathImage1 == null && txtPathImage2 == null ){
-                                    if((txtIdCategory.equals(enum_VisitPlanCategory.CUTI.getValue()+"") || txtIdCategory.equals(enum_VisitPlanCategory.PERJALANAN_DINAS.getValue()+"") )) {
-                                        if(strWarning.equals("")){
-                                            strWarning="";
+                                } else if (txtPathImage1 == null && txtPathImage2 == null) {
+                                    if ((txtIdCategory.equals(enum_VisitPlanCategory.CUTI.getValue() + "") || txtIdCategory.equals(enum_VisitPlanCategory.PERJALANAN_DINAS.getValue() + ""))) {
+                                        if (strWarning.equals("")) {
+                                            strWarning = "";
                                         }
-                                    }else{
+                                    } else {
                                         strWarning = "photo minimal 1";
                                     }
-                                }else if (txtIdCategory.equals(enum_VisitPlanCategory.OUTLET.getValue()+"") && tvDistance.getText().toString().equals("0")){
+                                } else if (txtIdCategory.equals(enum_VisitPlanCategory.OUTLET.getValue() + "") && tvDistance.getText().toString().equals("0")) {
                                     strWarning = "Please Set Location Outlet";
                                 } else if (etDesc.getText().toString().equals("")) {
                                     strWarning = "Description Tidak Boleh Kosong";
                                     textDescription.setErrorEnabled(true);
                                     textDescription.setError("Description Tidak Boleh Kosong");
                                     textDescription.requestFocus();
-                                } else if (txtIdCategory.equals(enum_VisitPlanCategory.ACTIVITY.getValue()+"") && (etPreNC.getText().toString().equals("")||etPreNC.getText().toString().equals("0"))) {
+                                } else if (txtIdCategory.equals(enum_VisitPlanCategory.ACTIVITY.getValue() + "") && (etPreNC.getText().toString().equals("") || etPreNC.getText().toString().equals("0"))) {
                                     strWarning = "PreNc Tidak Boleh Kosong";
                                     textPreNC.setErrorEnabled(true);
                                     textPreNC.setError("PreNc Tidak Boleh Kosong");
@@ -733,40 +778,43 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                                     textBobot.setErrorEnabled(true);
                                     textBobot.setError("POA Tidak Boleh Kosong");
                                     textBobot.requestFocus();
-                                } else if (txtIdCategory.equals(enum_VisitPlanCategory.OUTLET.getValue()+"") && etOutletName.getText().toString().equals("")) {
+                                } else if (txtIdCategory.equals(enum_VisitPlanCategory.OUTLET.getValue() + "") && etOutletName.getText().toString().equals("")) {
                                     strWarning = "Outlet Tidak Boleh Kosong";
-                                } else if (txtIdCategory.equals(enum_VisitPlanCategory.ACTIVITY.getValue()+"") && etPOA.getText().toString().equals("")) {
+                                } else if (txtIdCategory.equals(enum_VisitPlanCategory.ACTIVITY.getValue() + "") && etPOA.getText().toString().equals("")) {
                                     strWarning = "POA Tidak Boleh Kosong";
-                                } else if((txtIdCategory.equals(enum_VisitPlanCategory.CUTI.getValue()+"") == false || txtIdCategory.equals(enum_VisitPlanCategory.PERJALANAN_DINAS.getValue()+"") == false) &&
-                                        (lblLong.toString().equals("") || lblLong.toString().equals("0") || lblLang.toString().equals("") || lblLang.toString().equals("0"))){
-                                    strWarning="Koordinate Tidak Ketemu";
-                                }else if(etRealisasi.getText().toString().equals("")){
-                                    strWarning="No Validasi Harus Diisi";
-                                }else  if(txtIdCategory.equals(enum_VisitPlanCategory.OUTLET.getValue()+"")){
-                                    String txtDistance=tvDistance.getText().toString().replace(" meters","");
-                                    int intDistiance= Integer.valueOf(txtDistance);
-                                    String txtVISITPLAN_GEOTAGING_RADIUS= new Mobile_mConfigBL().getValue(enum_mconfig.VISITPLAN_GEOTAGING_RADIUS.getValue());
-                                    if(txtVISITPLAN_GEOTAGING_RADIUS.equals("0")==false){
-                                        int intVISITPLAN_GEOTAGING_RADIUS=Integer.valueOf(txtVISITPLAN_GEOTAGING_RADIUS);
-                                        if(intVISITPLAN_GEOTAGING_RADIUS<intDistiance ){
-                                            strWarning="Jarak Anda Ke Outlet Terlalu Jauh, Radius :"+txtVISITPLAN_GEOTAGING_RADIUS+" meters";
+                                } else if ((txtIdCategory.equals(enum_VisitPlanCategory.CUTI.getValue() + "") == false || txtIdCategory.equals(enum_VisitPlanCategory.PERJALANAN_DINAS.getValue() + "") == false) &&
+                                        (lblLong.toString().equals("") || lblLong.toString().equals("0") || lblLang.toString().equals("") || lblLang.toString().equals("0"))) {
+                                    strWarning = "Koordinate Tidak Ketemu";
+                                } else if (etRealisasi.getText().toString().equals("")) {
+                                    strWarning = "No Validasi Harus Diisi";
+                                } else if (txtIdCategory.equals(enum_VisitPlanCategory.OUTLET.getValue() + "")) {
+                                    String txtDistance = tvDistance.getText().toString().replace(" meters", "");
+                                    int intDistiance = Integer.valueOf(txtDistance);
+                                    String txtVISITPLAN_GEOTAGING_RADIUS = new Mobile_mConfigBL().getValue(enum_mconfig.VISITPLAN_GEOTAGING_RADIUS.getValue(), getActivity());
+                                    if (txtVISITPLAN_GEOTAGING_RADIUS.equals("0") == false) {
+                                        int intVISITPLAN_GEOTAGING_RADIUS = Integer.valueOf(txtVISITPLAN_GEOTAGING_RADIUS);
+                                        if (intVISITPLAN_GEOTAGING_RADIUS < intDistiance) {
+                                            strWarning = "Jarak Anda Ke Outlet Terlalu Jauh, Radius :" + txtVISITPLAN_GEOTAGING_RADIUS + " meters";
                                         }
                                     }
                                 }
                                 if (strWarning.equals("")) {
-                                    List<clsMobile_trVisitPlan_Header> ListOfHeaderVisitPlan = new Select().from(clsMobile_trVisitPlan_Header.class).execute();
-                                    if(Id.equals("")){
-                                        if(ListOfHeaderActive.size() == 0){
-                                            strWarning="Tidak Bisa Simpan Karena Belum membuat Plan minggu berjalan!!";
+
+                                    // List<clsMobile_trVisitPlan_Header> ListOfHeaderVisitPlan = new Select().from(clsMobile_trVisitPlan_Header.class).execute();
+                                    List<clsMobile_trVisitPlan_Header> ListOfHeaderVisitPlan = appDatabase.daoMobileTrVisitPlanHeader().getAll();
+
+                                    if (Id.equals("")) {
+                                        if (ListOfHeaderActive.size() == 0) {
+                                            strWarning = "Tidak Bisa Simpan Karena Belum membuat Plan minggu berjalan!!";
                                         }
                                     }
                                 }
-                                if(etPreNC.getText().toString().equals("")){
+                                if (etPreNC.getText().toString().equals("")) {
                                     etPreNC.setText("0");
                                 }
                                 if (strWarning.equals("")) {
-                                    if(ListOfCheckData.size()>0){
-                                        _clsMobile_ValidationNo=ListOfCheckData.get(0);
+                                    if (ListOfCheckData.size() > 0) {
+                                        _clsMobile_ValidationNo = ListOfCheckData.get(0);
                                     }
 
                                     if (Id.equals("") == false) {
@@ -787,27 +835,39 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                                             dtclsMobile_trVisitPlan_Detail.txtLongitude_Knis = dtclsMobile_MPartnerProfile.txtLongitude;
                                             dtclsMobile_trVisitPlan_Detail.txtLatitude_Knis = dtclsMobile_MPartnerProfile.txtLatitude;
                                             dtclsMobile_trVisitPlan_Detail.txtAccuracy_Knis = "0";
-                                            dtclsMobile_trVisitPlan_Detail.intPartnerID=dtclsMobile_MPartnerProfile.IntPartnerID.toString();
-                                            dtclsMobile_trVisitPlan_Detail.intPartnerIDCheckIn=txtIdOutletAlias;
+                                            dtclsMobile_trVisitPlan_Detail.intPartnerID = dtclsMobile_MPartnerProfile.IntPartnerID.toString();
+                                            dtclsMobile_trVisitPlan_Detail.intPartnerIDCheckIn = txtIdOutletAlias;
                                         }
                                         dtclsMobile_trVisitPlan_Detail.intSubmit = "2";
-                                        dtclsMobile_trVisitPlan_Detail.txtValidationNo=etRealisasi.getText().toString();
-                                        if(txtHDActualDate.getText().toString().equals("")){
-                                            dtclsMobile_trVisitPlan_Detail.dtActualDate = _clsMainBL.GetDateNowFromLogin();
-                                        }else{
+                                        dtclsMobile_trVisitPlan_Detail.txtValidationNo = etRealisasi.getText().toString();
+                                        if (txtHDActualDate.getText().toString().equals("")) {
+                                            dtclsMobile_trVisitPlan_Detail.dtActualDate = _clsMainBL.GetDateNowFromLogin(getActivity());
+                                        } else {
                                             dtclsMobile_trVisitPlan_Detail.dtActualDate = txtHDActualDate.getText().toString();
                                         }
 
-                                        dtclsMobile_trVisitPlan_Detail.dtValidated = _clsMainBL.GetDateNowFromLogin();
-                                        dtclsMobile_trVisitPlan_Detail.intJumlahPreNC=etPreNC.getText().toString();
-                                        dtclsMobile_trVisitPlan_Detail.save();
+                                        dtclsMobile_trVisitPlan_Detail.dtValidated = _clsMainBL.GetDateNowFromLogin(getActivity());
+                                        dtclsMobile_trVisitPlan_Detail.intJumlahPreNC = etPreNC.getText().toString();
+                                        // dtclsMobile_trVisitPlan_Detail.save();
+//                                        if (UtilFunc.isStringNotNull(dtclsMobile_trVisitPlan_Detail.txtGUI_Detail)) {
+//                                            appDatabase.daoMobileTrVisitPlanDetail().update(dtclsMobile_trVisitPlan_Detail);
+//                                        } else {
+//                                            appDatabase.daoMobileTrVisitPlanDetail().insert(dtclsMobile_trVisitPlan_Detail);
+//                                        }
+                                        appDatabase.daoMobileTrVisitPlanDetail().insert(dtclsMobile_trVisitPlan_Detail);
+
                                         clsMobile_trVisitPlan_Detail_Item _clsMobile_trVisitPlan_Detail_Item = new clsMobile_trVisitPlan_Detail_Item();
                                         List<clsMobile_trVisitPlan_Detail_Item> ListDataclsMobile_trVisitPlan_Detail_Item = null;
                                         _clsMobile_trVisitPlan_Detail_Item.txtGUI_Detail_Item = _clsMainBL.GenerateGuid();
                                         if (txtPathImage1 != null) {
-                                            ListDataclsMobile_trVisitPlan_Detail_Item = new Select().from(clsMobile_trVisitPlan_Detail_Item.class)
-                                                    .where(_clsMobile_trVisitPlan_Detail_Item.txtGUI_Detail + "=?", dtclsMobile_trVisitPlan_Detail.txtGUI_Detail)
-                                                    .where(_clsMobile_trVisitPlan_Detail_Item.txtConsintNo + "=1").execute();
+
+                                            // ListDataclsMobile_trVisitPlan_Detail_Item = new Select().from(clsMobile_trVisitPlan_Detail_Item.class)
+                                            //        .where(_clsMobile_trVisitPlan_Detail_Item.txtGUI_Detail + "=?", dtclsMobile_trVisitPlan_Detail.txtGUI_Detail)
+                                            //        .where(_clsMobile_trVisitPlan_Detail_Item.txtConsintNo + "=1").execute();
+
+                                            ListDataclsMobile_trVisitPlan_Detail_Item = appDatabase.daoMobileTrVisitPlanDetailItem()
+                                                    .getbyGUI_DetailtxtConsintNo(dtclsMobile_trVisitPlan_Detail.txtGUI_Detail, "1");
+
                                             if (ListDataclsMobile_trVisitPlan_Detail_Item.size() > 0) {
                                                 _clsMobile_trVisitPlan_Detail_Item = ListDataclsMobile_trVisitPlan_Detail_Item.get(0);
                                             } else {
@@ -817,9 +877,13 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                                             _clsMobile_trVisitPlan_Detail_Item.txtFileName = txtPathImage1;
 
                                         } else if (txtPathImage2 != null) {
-                                            ListDataclsMobile_trVisitPlan_Detail_Item = new Select().from(clsMobile_trVisitPlan_Detail_Item.class)
-                                                    .where(_clsMobile_trVisitPlan_Detail_Item.txtConsttxtGUI_Detail + "=?", dtclsMobile_trVisitPlan_Detail.txtGUI_Detail)
-                                                    .where(_clsMobile_trVisitPlan_Detail_Item.txtConsintNo + "=2").execute();
+
+//                                            ListDataclsMobile_trVisitPlan_Detail_Item = new Select().from(clsMobile_trVisitPlan_Detail_Item.class)
+//                                                    .where(_clsMobile_trVisitPlan_Detail_Item.txtConsttxtGUI_Detail + "=?", dtclsMobile_trVisitPlan_Detail.txtGUI_Detail)
+//                                                    .where(_clsMobile_trVisitPlan_Detail_Item.txtConsintNo + "=2").execute();
+                                            ListDataclsMobile_trVisitPlan_Detail_Item = appDatabase.daoMobileTrVisitPlanDetailItem().getbyGUI_DetailtxtConsintNo(dtclsMobile_trVisitPlan_Detail.txtGUI_Detail, "2");
+
+
                                             if (ListDataclsMobile_trVisitPlan_Detail_Item.size() > 0) {
                                                 _clsMobile_trVisitPlan_Detail_Item = ListDataclsMobile_trVisitPlan_Detail_Item.get(0);
                                             } else {
@@ -853,12 +917,22 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                                         _clsMobile_trVisitPlan_Detail_Item.txtLongitude = lblLong.getText().toString();
                                         _clsMobile_trVisitPlan_Detail_Item.txtLatitude = lblLang.getText().toString();
                                         _clsMobile_trVisitPlan_Detail_Item.txtAccuracy = lblAcc.getText().toString();
-                                        _clsMobile_trVisitPlan_Detail_Item.dtCaptureGeotagging = _clsMainBL.GetDateNowFromLogin();
+                                        _clsMobile_trVisitPlan_Detail_Item.dtCaptureGeotagging = _clsMainBL.GetDateNowFromLogin(getActivity());
                                         _clsMobile_trVisitPlan_Detail_Item.txtGUI_Detail = dtclsMobile_trVisitPlan_Detail.txtGUI_Detail;
-                                        _clsMobile_trVisitPlan_Detail_Item.save();
-                                        if (txtPathImage1 != null||txtPathImage2 != null) {
+
+//                                        if (UtilFunc.isStringNotNull(_clsMobile_trVisitPlan_Detail_Item.txtGUI_Detail_Item)) {
+//                                            appDatabase.daoMobileTrVisitPlanDetailItem().update(_clsMobile_trVisitPlan_Detail_Item);
+//                                        } else {
+//                                            appDatabase.daoMobileTrVisitPlanDetailItem().insert(_clsMobile_trVisitPlan_Detail_Item);
+//                                        }
+                                        appDatabase.daoMobileTrVisitPlanDetailItem().insert(_clsMobile_trVisitPlan_Detail_Item);
+
+                                        if (txtPathImage1 != null || txtPathImage2 != null) {
                                             clsMobile_mBinaryFile _clsMobile_mBinaryFile = new clsMobile_mBinaryFile();
-                                            List<clsMobile_mBinaryFile> ListOfclsMobile_mBinaryFile = new Select().from(clsMobile_mBinaryFile.class).where(_clsMobile_mBinaryFile.txtConsttxtGUI_IDTable + "=?", _clsMobile_trVisitPlan_Detail_Item.txtGUI_Detail_Item).where(_clsMobile_mBinaryFile.txtConsttxtFileName + "=?", _clsMobile_trVisitPlan_Detail_Item.txtFileName).execute();
+
+                                            // List<clsMobile_mBinaryFile> ListOfclsMobile_mBinaryFile = new Select().from(clsMobile_mBinaryFile.class).where(_clsMobile_mBinaryFile.txtConsttxtGUI_IDTable + "=?", _clsMobile_trVisitPlan_Detail_Item.txtGUI_Detail_Item).where(_clsMobile_mBinaryFile.txtConsttxtFileName + "=?", _clsMobile_trVisitPlan_Detail_Item.txtFileName).execute();
+                                            List<clsMobile_mBinaryFile> ListOfclsMobile_mBinaryFile = appDatabase.daoMobile_mBinaryFile().getbyGUI_IDTableFileName(_clsMobile_trVisitPlan_Detail_Item.txtGUI_Detail_Item, _clsMobile_trVisitPlan_Detail_Item.txtFileName);
+
                                             if (ListOfclsMobile_mBinaryFile.size() > 0) {
                                                 _clsMobile_mBinaryFile = ListOfclsMobile_mBinaryFile.get(0);
                                             } else {
@@ -867,11 +941,27 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                                             _clsMobile_mBinaryFile.txtGUI_IDTable = _clsMobile_trVisitPlan_Detail_Item.txtGUI_Detail_Item;
                                             _clsMobile_mBinaryFile.txtFileName = _clsMobile_trVisitPlan_Detail_Item.txtFileName;
                                             _clsMobile_mBinaryFile.txtBinary = txtBinaryImage1;
-                                            _clsMobile_mBinaryFile.save();
+
+//                                            if (UtilFunc.isStringNotNull(_clsMobile_mBinaryFile.txtGUI_ID)) {
+//                                                appDatabase.daoMobile_mBinaryFile().update(_clsMobile_mBinaryFile);
+//                                            } else {
+//                                                appDatabase.daoMobile_mBinaryFile().insert(_clsMobile_mBinaryFile);
+//                                            }
+                                            appDatabase.daoMobile_mBinaryFile().insert(_clsMobile_mBinaryFile);
+
+
                                         }
 
-                                        _clsMobile_ValidationNo.bitUse="1";
-                                        _clsMobile_ValidationNo.save();
+                                        _clsMobile_ValidationNo.bitUse = "1";
+                                        // _clsMobile_ValidationNo.save();
+
+//                                        if (UtilFunc.isStringNotNull(_clsMobile_ValidationNo.txtValidationNo)) {
+//                                            appDatabase.daoMobileValidationNo().update(_clsMobile_ValidationNo);
+//                                        } else {
+//                                            appDatabase.daoMobileValidationNo().insert(_clsMobile_ValidationNo);
+//                                        }
+                                        appDatabase.daoMobileValidationNo().insert(_clsMobile_ValidationNo);
+
                                         ReportingFragment frag = new ReportingFragment();
                                         FragmentManager fragmentManager = getFragmentManager();
                                         fragmentManager.beginTransaction().replace(R.id.frame
@@ -881,35 +971,35 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                                         dtclsMobile_trVisitPlan_Detail = new clsMobile_trVisitPlan_Detail();
                                         dtclsMobile_trVisitPlan_Detail.intVisitPlan_HeaderID = String.valueOf(_clsMobile_trVisitPlan_Header.IntVisitPlan_HeaderID);
                                         dtclsMobile_trVisitPlan_Detail.intVisitPlan_DetailID = java.lang.Long.valueOf("0");
-                                        dtclsMobile_trVisitPlan_Detail.txtValidationNo=etRealisasi.getText().toString();
+                                        dtclsMobile_trVisitPlan_Detail.txtValidationNo = etRealisasi.getText().toString();
                                         dtclsMobile_trVisitPlan_Detail.intCategoryID = txtIdCategory;
                                         if (dtclsMobile_MPartnerProfile != null) {
                                             dtclsMobile_trVisitPlan_Detail.txtLongitude_Knis = dtclsMobile_MPartnerProfile.txtLongitude;
                                             dtclsMobile_trVisitPlan_Detail.txtLatitude_Knis = dtclsMobile_MPartnerProfile.txtLatitude;
                                             dtclsMobile_trVisitPlan_Detail.txtAccuracy_Knis = "0";
-                                            dtclsMobile_trVisitPlan_Detail.intPartnerID=dtclsMobile_MPartnerProfile.IntPartnerID.toString();
-                                            dtclsMobile_trVisitPlan_Detail.intPartnerIDCheckIn=txtIdOutletAlias;
+                                            dtclsMobile_trVisitPlan_Detail.intPartnerID = dtclsMobile_MPartnerProfile.IntPartnerID.toString();
+                                            dtclsMobile_trVisitPlan_Detail.intPartnerIDCheckIn = txtIdOutletAlias;
                                         }
-                                        if (txtIdCategory.equals(enum_VisitPlanCategory.ACTIVITY.getValue()+"")) {
+                                        if (txtIdCategory.equals(enum_VisitPlanCategory.ACTIVITY.getValue() + "")) {
                                             dtclsMobile_trVisitPlan_Detail.txtNoKode = dtclsMobile_trPOA.intProgramID + "";
-                                        } else if (txtIdCategory.equals(enum_VisitPlanCategory.OUTLET.getValue()+"")) {
+                                        } else if (txtIdCategory.equals(enum_VisitPlanCategory.OUTLET.getValue() + "")) {
                                             if (dtclsMobile_MPartnerProfile != null) {
                                                 dtclsMobile_trVisitPlan_Detail.txtNoKode = dtclsMobile_MPartnerProfile.txtPartnerCRM + "";
                                                 dtclsMobile_trVisitPlan_Detail.txtAccuracy_Knis = "0";
                                                 dtclsMobile_trVisitPlan_Detail.txtLatitude_Knis = dtclsMobile_MPartnerProfile.txtLatitude;
                                                 dtclsMobile_trVisitPlan_Detail.txtLongitude_Knis = dtclsMobile_MPartnerProfile.txtLongitude;
-                                                dtclsMobile_trVisitPlan_Detail.intPartnerID=dtclsMobile_MPartnerProfile.IntPartnerID.toString();
-                                                dtclsMobile_trVisitPlan_Detail.intPartnerIDCheckIn=txtIdOutletAlias;
+                                                dtclsMobile_trVisitPlan_Detail.intPartnerID = dtclsMobile_MPartnerProfile.IntPartnerID.toString();
+                                                dtclsMobile_trVisitPlan_Detail.intPartnerIDCheckIn = txtIdOutletAlias;
                                             }
                                         }
                                         dtclsMobile_trVisitPlan_Detail.dtPlanDate = null;
-                                        if(dtclsMobile_trVisitPlan_Detail.dtActualDate==null){
-                                            dtclsMobile_trVisitPlan_Detail.dtActualDate = _clsMainBL.GetDateNowFromLogin();
+                                        if (dtclsMobile_trVisitPlan_Detail.dtActualDate == null) {
+                                            dtclsMobile_trVisitPlan_Detail.dtActualDate = _clsMainBL.GetDateNowFromLogin(getActivity());
                                         }
-                                        if(dtclsMobile_trVisitPlan_Detail.dtActualDate.equals("")){
-                                            dtclsMobile_trVisitPlan_Detail.dtActualDate = _clsMainBL.GetDateNowFromLogin();
+                                        if (dtclsMobile_trVisitPlan_Detail.dtActualDate.equals("")) {
+                                            dtclsMobile_trVisitPlan_Detail.dtActualDate = _clsMainBL.GetDateNowFromLogin(getActivity());
                                         }
-                                        dtclsMobile_trVisitPlan_Detail.dtValidated = _clsMainBL.GetDateNowFromLogin();
+                                        dtclsMobile_trVisitPlan_Detail.dtValidated = _clsMainBL.GetDateNowFromLogin(getActivity());
                                         dtclsMobile_trVisitPlan_Detail.txtDescription = etDesc.getText().toString();
                                         dtclsMobile_trVisitPlan_Detail.intJumlahPreNC = etPreNC.getText().toString();
                                         dtclsMobile_trVisitPlan_Detail.intBobot = etBobot.getText().toString();
@@ -918,14 +1008,26 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                                         dtclsMobile_trVisitPlan_Detail.txtCategoryName = spnCategory.getSelectedItem().toString();
                                         dtclsMobile_trVisitPlan_Detail.txtGUI_Detail = _clsMainBL.GenerateGuid();
                                         dtclsMobile_trVisitPlan_Detail.txtLOBName = spnLOB.getSelectedItem().toString();
-                                        dtclsMobile_trVisitPlan_Detail.save();
+                                        // dtclsMobile_trVisitPlan_Detail.save();
+//                                        if (UtilFunc.isStringNotNull(dtclsMobile_trVisitPlan_Detail.txtGUI_Detail)) {
+//                                            appDatabase.daoMobileTrVisitPlanDetail().update(dtclsMobile_trVisitPlan_Detail);
+//                                        } else {
+//                                            appDatabase.daoMobileTrVisitPlanDetail().insert(dtclsMobile_trVisitPlan_Detail);
+//                                        }
+                                        appDatabase.daoMobileTrVisitPlanDetail().insert(dtclsMobile_trVisitPlan_Detail);
+
                                         clsMobile_trVisitPlan_Detail_Item _clsMobile_trVisitPlan_Detail_Item = new clsMobile_trVisitPlan_Detail_Item();
                                         List<clsMobile_trVisitPlan_Detail_Item> ListDataclsMobile_trVisitPlan_Detail_Item = null;
                                         _clsMobile_trVisitPlan_Detail_Item.txtGUI_Detail_Item = _clsMainBL.GenerateGuid();
                                         if (txtPathImage1 != null) {
-                                            ListDataclsMobile_trVisitPlan_Detail_Item = new Select().from(clsMobile_trVisitPlan_Detail_Item.class)
-                                                    .where(_clsMobile_trVisitPlan_Detail_Item.txtGUI_Detail + "=?", dtclsMobile_trVisitPlan_Detail.txtGUI_Detail)
-                                                    .where(_clsMobile_trVisitPlan_Detail_Item.txtConsintNo + "=1").execute();
+
+                                            // ListDataclsMobile_trVisitPlan_Detail_Item = new Select().from(clsMobile_trVisitPlan_Detail_Item.class)
+                                            //        .where(_clsMobile_trVisitPlan_Detail_Item.txtGUI_Detail + "=?", dtclsMobile_trVisitPlan_Detail.txtGUI_Detail)
+                                            //        .where(_clsMobile_trVisitPlan_Detail_Item.txtConsintNo + "=1").execute();
+
+                                            ListDataclsMobile_trVisitPlan_Detail_Item = appDatabase.daoMobileTrVisitPlanDetailItem()
+                                                    .getbyGUI_DetailtxtConsintNo(dtclsMobile_trVisitPlan_Detail.txtGUI_Detail, "1");
+
                                             if (ListDataclsMobile_trVisitPlan_Detail_Item.size() > 0) {
                                                 _clsMobile_trVisitPlan_Detail_Item = ListDataclsMobile_trVisitPlan_Detail_Item.get(0);
                                             } else {
@@ -935,9 +1037,13 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                                             _clsMobile_trVisitPlan_Detail_Item.intNo = "1";
 
                                         } else if (txtPathImage2 != null) {
-                                            ListDataclsMobile_trVisitPlan_Detail_Item = new Select().from(clsMobile_trVisitPlan_Detail_Item.class)
-                                                    .where(_clsMobile_trVisitPlan_Detail_Item.txtConsttxtGUI_Detail + "=?", dtclsMobile_trVisitPlan_Detail.txtGUI_Detail)
-                                                    .where(_clsMobile_trVisitPlan_Detail_Item.txtConsintNo + "=2").execute();
+                                            // ListDataclsMobile_trVisitPlan_Detail_Item = new Select().from(clsMobile_trVisitPlan_Detail_Item.class)
+                                            //        .where(_clsMobile_trVisitPlan_Detail_Item.txtConsttxtGUI_Detail + "=?", dtclsMobile_trVisitPlan_Detail.txtGUI_Detail)
+                                            //        .where(_clsMobile_trVisitPlan_Detail_Item.txtConsintNo + "=2").execute();
+
+                                            ListDataclsMobile_trVisitPlan_Detail_Item = appDatabase.daoMobileTrVisitPlanDetailItem()
+                                                    .getbyGUI_DetailtxtConsintNo(dtclsMobile_trVisitPlan_Detail.txtGUI_Detail, "2");
+
                                             if (ListDataclsMobile_trVisitPlan_Detail_Item.size() > 0) {
                                                 _clsMobile_trVisitPlan_Detail_Item = ListDataclsMobile_trVisitPlan_Detail_Item.get(0);
                                             } else {
@@ -972,13 +1078,28 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                                         _clsMobile_trVisitPlan_Detail_Item.txtLongitude = lblLong.getText().toString();
                                         _clsMobile_trVisitPlan_Detail_Item.txtLatitude = lblLang.getText().toString();
                                         _clsMobile_trVisitPlan_Detail_Item.txtAccuracy = lblAcc.getText().toString();
-                                        _clsMobile_trVisitPlan_Detail_Item.dtCaptureGeotagging = _clsMainBL.GetDateNowFromLogin();
+                                        _clsMobile_trVisitPlan_Detail_Item.dtCaptureGeotagging = _clsMainBL.GetDateNowFromLogin(getActivity());
                                         _clsMobile_trVisitPlan_Detail_Item.txtGUI_Detail = dtclsMobile_trVisitPlan_Detail.txtGUI_Detail;
-                                        _clsMobile_trVisitPlan_Detail_Item.save();
+                                        // _clsMobile_trVisitPlan_Detail_Item.save();
 
-                                        if (txtPathImage1 != null||txtPathImage2 != null) {
+//                                        if (UtilFunc.isStringNotNull(_clsMobile_trVisitPlan_Detail_Item.txtGUI_Detail_Item)) {
+//                                            appDatabase.daoMobileTrVisitPlanDetailItem().update(_clsMobile_trVisitPlan_Detail_Item);
+//                                        } else {
+//                                            appDatabase.daoMobileTrVisitPlanDetailItem().insert(_clsMobile_trVisitPlan_Detail_Item);
+//                                        }
+                                        appDatabase.daoMobileTrVisitPlanDetailItem().insert(_clsMobile_trVisitPlan_Detail_Item);
+
+                                        if (txtPathImage1 != null || txtPathImage2 != null) {
                                             clsMobile_mBinaryFile _clsMobile_mBinaryFile = new clsMobile_mBinaryFile();
-                                            List<clsMobile_mBinaryFile> ListOfclsMobile_mBinaryFile = new Select().from(clsMobile_mBinaryFile.class).where(_clsMobile_mBinaryFile.txtConsttxtGUI_IDTable + "=?", _clsMobile_trVisitPlan_Detail_Item.txtGUI_Detail_Item).where(_clsMobile_mBinaryFile.txtConsttxtFileName + "=?", _clsMobile_trVisitPlan_Detail_Item.txtFileName).execute();
+                                            // List<clsMobile_mBinaryFile> ListOfclsMobile_mBinaryFile = new Select().from(clsMobile_mBinaryFile.class)
+                                            //        .where(_clsMobile_mBinaryFile.txtConsttxtGUI_IDTable + "=?", _clsMobile_trVisitPlan_Detail_Item.txtGUI_Detail_Item)
+                                            //        .where(_clsMobile_mBinaryFile.txtConsttxtFileName + "=?", _clsMobile_trVisitPlan_Detail_Item.txtFileName)
+                                            //        .execute();
+
+                                            List<clsMobile_mBinaryFile> ListOfclsMobile_mBinaryFile = appDatabase.daoMobile_mBinaryFile()
+                                                    .getbyGUI_IDTableFileName(_clsMobile_trVisitPlan_Detail_Item.txtGUI_Detail_Item
+                                                            , _clsMobile_trVisitPlan_Detail_Item.txtFileName);
+
                                             if (ListOfclsMobile_mBinaryFile.size() > 0) {
                                                 _clsMobile_mBinaryFile = ListOfclsMobile_mBinaryFile.get(0);
                                             } else {
@@ -987,7 +1108,14 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                                             _clsMobile_mBinaryFile.txtGUI_IDTable = _clsMobile_trVisitPlan_Detail_Item.txtGUI_Detail_Item;
                                             _clsMobile_mBinaryFile.txtFileName = _clsMobile_trVisitPlan_Detail_Item.txtFileName;
                                             _clsMobile_mBinaryFile.txtBinary = txtBinaryImage1;
-                                            _clsMobile_mBinaryFile.save();
+                                            // _clsMobile_mBinaryFile.save();
+
+//                                            if (UtilFunc.isStringNotNull(_clsMobile_mBinaryFile.txtGUI_ID)) {
+//                                                appDatabase.daoMobile_mBinaryFile().update(_clsMobile_mBinaryFile);
+//                                            } else {
+//                                                appDatabase.daoMobile_mBinaryFile().insert(_clsMobile_mBinaryFile);
+//                                            }
+                                            appDatabase.daoMobile_mBinaryFile().insert(_clsMobile_mBinaryFile);
                                         }
                         /*
                         clsMobile_mBinaryFile _clsMobile_mBinaryFile = new clsMobile_mBinaryFile();
@@ -1002,8 +1130,16 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                         _clsMobile_mBinaryFile.txtBinary = txtBinaryImage1;
                         _clsMobile_mBinaryFile.save();
                         */
-                                        _clsMobile_ValidationNo.bitUse="1";
-                                        _clsMobile_ValidationNo.save();
+                                        _clsMobile_ValidationNo.bitUse = "1";
+                                        // _clsMobile_ValidationNo.save();
+
+//                                        if (UtilFunc.isStringNotNull(_clsMobile_ValidationNo.txtValidationNo)) {
+//                                            appDatabase.daoMobileValidationNo().update(_clsMobile_ValidationNo);
+//                                        } else {
+//                                            appDatabase.daoMobileValidationNo().insert(_clsMobile_ValidationNo);
+//                                        }
+                                        appDatabase.daoMobileValidationNo().insert(_clsMobile_ValidationNo);
+
                                         ReportingFragment frag = new ReportingFragment();
                                         FragmentManager fragmentManager = getFragmentManager();
                                         fragmentManager.beginTransaction().replace(R.id.frame
@@ -1013,7 +1149,8 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                                     _clsMainBL.showToastWarning(getContext(), strWarning);
                                 }
 
-                            }})
+                            }
+                        })
                         .setNegativeButton(android.R.string.no, null).show();
             }
         });
@@ -1053,7 +1190,7 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
 
                         double latitudeOutlet = Double.parseDouble("232.23");
                         double longitudeOutlet = Double.parseDouble("-232.23");
-                        if (txtHDLati.getText().toString().equals("")==false && txtHDLong.getText().toString().equals("")==false) {
+                        if (txtHDLati.getText().toString().equals("") == false && txtHDLong.getText().toString().equals("") == false) {
                             latitudeOutlet = Double.parseDouble(txtHDLati.getText().toString());
                             longitudeOutlet = Double.parseDouble(txtHDLong.getText().toString());
                         }
@@ -1119,7 +1256,7 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                         locationB.setLongitude(longitudeOutlet);
 
                         float distance = locationA.distanceTo(locationB);
-                        intdistance=(int) Math.ceil(distance);
+                        intdistance = (int) Math.ceil(distance);
                         alertD.setTitle(String.valueOf((int) Math.ceil(distance)) + " meters");
                         alertD.show();
                     }
@@ -1130,30 +1267,51 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
         return v;
     }
 
-    private void ShowForLocationAndPhoto(boolean param){
-        if(param){
+    private void ShowForLocationAndPhoto(boolean param) {
+        if (param) {
             llimgview.setVisibility(View.VISIBLE);
             trLocation.setVisibility(View.VISIBLE);
             btnRefreshMaps.setVisibility(View.VISIBLE);
             btnPopupMap.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             llimgview.setVisibility(View.GONE);
             trLocation.setVisibility(View.GONE);
             btnRefreshMaps.setVisibility(View.GONE);
             btnPopupMap.setVisibility(View.GONE);
         }
     }
+
     private String GetBobot() {
         clsMobile_mVisitPlanCategory _clsMobile_mVisitPlanCategory = new clsMobile_mVisitPlanCategory();
-        List<clsMobile_mVisitPlanCategory> ListCategoryPlan = new Select().from(clsMobile_mVisitPlanCategory.class).where(_clsMobile_mVisitPlanCategory.txtConstintCategoryID + "=?", txtIdCategory).execute();
+
+        //List<clsMobile_mVisitPlanCategory> ListCategoryPlan = new Select().from(clsMobile_mVisitPlanCategory.class)
+        //        .where(_clsMobile_mVisitPlanCategory.txtConstintCategoryID + "=?", txtIdCategory).execute();
+
+        List<clsMobile_mVisitPlanCategory> ListCategoryPlan = appDatabase.daoMobileMVisitPlanCategory()
+                .getBytxtConstintCategoryID(txtIdCategory);
+
         int Bobot = 0;
         String txtCategory = spnCategory.getSelectedItem().toString().toUpperCase();
         clsMobile_UserJabatan _clsMobile_UserJabatan = new clsMobile_UserJabatan();
-        List<clsMobile_UserJabatan> ListOfclsMobile_UserJabatan = new Select().from(clsMobile_UserJabatan.class).where(_clsMobile_UserJabatan.txtConstBitPrimary + "=1").execute();
+
+        //List<clsMobile_UserJabatan> ListOfclsMobile_UserJabatan = new Select().from(clsMobile_UserJabatan.class)
+        // .where(_clsMobile_UserJabatan.txtConstBitPrimary + "=1").execute();
+        List<clsMobile_UserJabatan> ListOfclsMobile_UserJabatan = appDatabase.daoMobileUserJabatan()
+                .getBytxtConstBitPrimary("1");
+
+
         if (ListCategoryPlan.size() > 0) {
             clsMobile_mVisitPlanCategoryDetail _clsMobile_mVisitPlanCategoryDetail = new clsMobile_mVisitPlanCategoryDetail();
-            List<clsMobile_mVisitPlanCategoryDetail> ListCategoryPlanDetail = new Select().from(clsMobile_mVisitPlanCategoryDetail.class).where(_clsMobile_mVisitPlanCategoryDetail.txtConstintCategoryID + "=?", txtIdCategory).where(_clsMobile_mVisitPlanCategoryDetail.txtConstIntJabatanID + "=?", ListOfclsMobile_UserJabatan.get(0).IntJabatanID).execute();
-            if(ListCategoryPlanDetail.size()>0){
+
+            // List<clsMobile_mVisitPlanCategoryDetail> ListCategoryPlanDetail = new Select().from(clsMobile_mVisitPlanCategoryDetail.class)
+            // .where(_clsMobile_mVisitPlanCategoryDetail.txtConstintCategoryID + "=?", txtIdCategory)
+            // .where(_clsMobile_mVisitPlanCategoryDetail.txtConstIntJabatanID + "=?", ListOfclsMobile_UserJabatan.get(0).IntJabatanID).execute();
+
+            List<clsMobile_mVisitPlanCategoryDetail> ListCategoryPlanDetail = appDatabase.daoMobileMVisitPlanCategoryDetail()
+                    .getBytxtConstintCategoryID_txtConstIntJabatanID(Integer.parseInt(txtIdCategory),
+                            Integer.parseInt(String.valueOf(ListOfclsMobile_UserJabatan.get(0).IntJabatanID)));
+
+            if (ListCategoryPlanDetail.size() > 0) {
                 Bobot = Integer.valueOf(ListCategoryPlanDetail.get(0).IntBobot + "");
                 if (cbFullDay.isChecked()) {
                     Bobot = Bobot * 2;
@@ -1192,7 +1350,7 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
 
     private void displayLocation() {
         // TODO Auto-generated method stub
-        if(getContext()!=null){
+        if (getContext() != null) {
             if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
@@ -1203,7 +1361,7 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
 
             //mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
-            mLastLocation=getLocation();
+            mLastLocation = getLocation();
             if (mLastLocation != null) {
                 double latitude = mLastLocation.getLatitude();
                 double longitude = mLastLocation.getLongitude();
@@ -1215,14 +1373,14 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                 Long = String.valueOf(longitude);
                 Lat = String.valueOf(latitude);
                 Acc = String.valueOf(accurate);
-                if((txtHDLong.getText().toString().equals("")==false && txtHDLati.getText().toString().equals("")==false)){
-                    if(txtHDLong.getText().toString().equals("No Location")==false && txtHDLati.getText().toString().equals("No Location")==false){
+                if ((txtHDLong.getText().toString().equals("") == false && txtHDLati.getText().toString().equals("") == false)) {
+                    if (txtHDLong.getText().toString().equals("No Location") == false && txtHDLati.getText().toString().equals("No Location") == false) {
                         double latitudeOutlet = Double.parseDouble("0");
                         double longitudeOutlet = Double.parseDouble("0");
-                        clsMobile_MPartnerProfile _clsMobile_MPartnerProfile=new clsMobile_MPartnerProfile();
+                        clsMobile_MPartnerProfile _clsMobile_MPartnerProfile = new clsMobile_MPartnerProfile();
 
                         latitudeOutlet = Double.parseDouble(txtHDLati.getText().toString());
-                        longitudeOutlet= Double.parseDouble(txtHDLong.getText().toString());
+                        longitudeOutlet = Double.parseDouble(txtHDLong.getText().toString());
                         Location locationA = new Location("point A");
 
                         locationA.setLatitude(latitude);
@@ -1234,24 +1392,24 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                         locationB.setLongitude(longitudeOutlet);
 
                         float distance = locationA.distanceTo(locationB);
-                        intdistance=(int) Math.ceil(distance);
+                        intdistance = (int) Math.ceil(distance);
                         tvDistance.setText(String.valueOf((int) Math.ceil(distance)) + " meters");
                     }
                 }
-            }else{
-                if(dtclsMobile_MPartnerProfile!=null){
-                    if(dtclsMobile_MPartnerProfile.txtPartnerCRM!=null && lblLang.getText().toString().equals("") && lblLong.getText().toString().equals("")){
+            } else {
+                if (dtclsMobile_MPartnerProfile != null) {
+                    if (dtclsMobile_MPartnerProfile.txtPartnerCRM != null && lblLang.getText().toString().equals("") && lblLong.getText().toString().equals("")) {
                         double latitudeOutlet = Double.parseDouble("0");
                         double longitudeOutlet = Double.parseDouble("0");
-                        clsMobile_MPartnerProfile _clsMobile_MPartnerProfile=new clsMobile_MPartnerProfile();
-                        if(lblLang.getText().equals("")||lblLong.getText().equals("")){
+                        clsMobile_MPartnerProfile _clsMobile_MPartnerProfile = new clsMobile_MPartnerProfile();
+                        if (lblLang.getText().equals("") || lblLong.getText().equals("")) {
                             lblLang.setText("No Location");
                             lblLong.setText("No Location");
                             txtHDLati.setText("");
                             txtHDLong.setText("");
-                        }else{
+                        } else {
                             latitudeOutlet = Double.parseDouble(dtclsMobile_MPartnerProfile.txtLatitude);
-                            longitudeOutlet= Double.parseDouble(dtclsMobile_MPartnerProfile.txtLongitude);
+                            longitudeOutlet = Double.parseDouble(dtclsMobile_MPartnerProfile.txtLongitude);
                             Location locationA = new Location("point A");
 
                             locationA.setLatitude(Double.valueOf(lblLang.getText().toString()));
@@ -1263,7 +1421,7 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                             locationB.setLongitude(longitudeOutlet);
 
                             float distance = locationA.distanceTo(locationB);
-                            intdistance=(int) Math.ceil(distance);
+                            intdistance = (int) Math.ceil(distance);
                             tvDistance.setText(String.valueOf((int) Math.ceil(distance)) + " meters");
                         }
 
@@ -1306,6 +1464,7 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
         }
         return bitMapImage;
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -1318,6 +1477,7 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
 
         }
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -1328,6 +1488,7 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
             fM.beginTransaction().remove(mapFragment).commit();
         }
     }
+
     @Override
     public void onStart() {
         // TODO Auto-generated method stub
@@ -1368,7 +1529,7 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
             return FileProvider.getUriForFile(getActivity(),
                     BuildConfig.APPLICATION_ID + ".provider",
                     getOutputMediaFile());
-        }else{
+        } else {
             return Uri.fromFile(getOutputMediaFile());
         }
     }
@@ -1407,8 +1568,8 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
         intentCamera2.putExtra(MediaStore.EXTRA_OUTPUT, uriImage);
         getActivity().startActivityForResult(intentCamera2, CAMERA_CAPTURE_IMAGE2_REQUEST_CODE);
     }
-    public class MyAdapter extends ArrayAdapter<String>
-    {
+
+    public class MyAdapter extends ArrayAdapter<String> {
         private List<String> arrayDataAdapyter;
         private List<String> arrayDataAdapyterDesc;
         private Context Ctx;
@@ -1416,6 +1577,7 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
         public List<String> getArrayDataAdapyterDesc() {
             return arrayDataAdapyterDesc;
         }
+
         public void setArrayDataAdapyterDesc(List<String> arrayDataAdapyterDesc) {
             this.arrayDataAdapyterDesc = arrayDataAdapyterDesc;
         }
@@ -1423,48 +1585,49 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
         public List<String> getArrayDataAdapyter() {
             return arrayDataAdapyter;
         }
+
         public void setArrayDataAdapyter(List<String> arrayDataAdapyter) {
             this.arrayDataAdapyter = arrayDataAdapyter;
         }
+
         public Context getCtx() {
             return Ctx;
         }
+
         public void setCtx(Context ctx) {
             Ctx = ctx;
         }
-        public MyAdapter(Context context, int textViewResourceId, List<String> objects,List<String> objectsDesc)
-        {
+
+        public MyAdapter(Context context, int textViewResourceId, List<String> objects, List<String> objectsDesc) {
             super(context, textViewResourceId, objects);
             setCtx(context);
             setArrayDataAdapyter(objects);
             setArrayDataAdapyterDesc(objectsDesc);
             // TODO Auto-generated constructor stub
         }
+
         @Override
-        public View getDropDownView(int position, View convertView,ViewGroup parent)
-        {
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
             return getCustomView(position, convertView, parent);
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent)
-        {
+        public View getView(int position, View convertView, ViewGroup parent) {
             return getCustomView(position, convertView, parent);
         }
 
-        public View getCustomView(int position, View convertView, ViewGroup parent)
-        {
-            LayoutInflater inflater=getActivity().getLayoutInflater();
-            View row=inflater.inflate(R.layout.custom_spinner, parent, false);
-            if(getArrayDataAdapyter().size()>0){
-                TextView label=(TextView)row.findViewById(R.id.tvTitle);
+        public View getCustomView(int position, View convertView, ViewGroup parent) {
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            View row = inflater.inflate(R.layout.custom_spinner, parent, false);
+            if (getArrayDataAdapyter().size() > 0) {
+                TextView label = (TextView) row.findViewById(R.id.tvTitle);
                 label.setText(getArrayDataAdapyter().get(position));
                 label.setTextColor(new Color().parseColor("#000000"));
-                TextView sub=(TextView)row.findViewById(R.id.tvDesc);
-                if(getArrayDataAdapyterDesc().get(position).equals("")){
+                TextView sub = (TextView) row.findViewById(R.id.tvDesc);
+                if (getArrayDataAdapyterDesc().get(position).equals("")) {
                     sub.setVisibility(View.INVISIBLE);
                     sub.setVisibility(View.GONE);
-                }else{
+                } else {
                     sub.setVisibility(View.VISIBLE);
                 }
                 sub.setText(getArrayDataAdapyterDesc().get(position));
@@ -1476,6 +1639,7 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
         }
 
     }
+
     public void searchOutlet() {
         LayoutInflater layoutInflater = LayoutInflater.from(getContext());
         final View promptView = layoutInflater.inflate(R.layout.layout_popup_outlet, null);
@@ -1539,10 +1703,10 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(etSearch.getText().length()>=3){
+                if (etSearch.getText().length() >= 3) {
                     AsyncCallSearchOutlet _AsyncCallSearchOutlet = new AsyncCallSearchOutlet();
                     _AsyncCallSearchOutlet.execute();
-                }else{
+                } else {
                     _clsMainBL.showToastWarning(getContext(), "Isi Minimal 3 karakter");
                     etSearch.requestFocus();
                 }
@@ -1561,11 +1725,12 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
         alertD = alertDialogBuilder.create();
         alertD.show();
     }
+
     public void searchNoRealisai() {
         LayoutInflater layoutInflater = LayoutInflater.from(getContext());
         final View promptView = layoutInflater.inflate(R.layout.layout_popup_norealisasi, null);
-        TableLayout tlRealisasi=(TableLayout)promptView.findViewById(R.id.tlRealisasi);
-        TextView tvTotRealisasi=(TextView)promptView.findViewById(R.id.tvTotRealisasi);
+        TableLayout tlRealisasi = (TableLayout) promptView.findViewById(R.id.tlRealisasi);
+        TextView tvTotRealisasi = (TextView) promptView.findViewById(R.id.tvTotRealisasi);
         final TableRow row = new TableRow(getContext());
         TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1f);
         params.setMargins(1, 1, 1, 1);
@@ -1583,12 +1748,18 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
             tv.setLayoutParams(params);
             tr.addView(tv);
         }
-        tlRealisasi.addView(tr,0);
-        if(ListOfclsMobile_ValidationNoe!=null){
-            clsMobile_ValidationNo _clsMobile_ValidationNo=new clsMobile_ValidationNo();
-            List<clsMobile_ValidationNo> ListDisplayNo=new Select().from(clsMobile_ValidationNo.class).where(_clsMobile_ValidationNo.txtConstBitUse+"=0").limit(10).execute();
+        tlRealisasi.addView(tr, 0);
+        if (ListOfclsMobile_ValidationNoe != null) {
+            clsMobile_ValidationNo _clsMobile_ValidationNo = new clsMobile_ValidationNo();
+
+            // List<clsMobile_ValidationNo> ListDisplayNo = new Select().from(clsMobile_ValidationNo.class)
+            // .where(_clsMobile_ValidationNo.txtConstBitUse + "=0").limit(10).execute();
+            List<clsMobile_ValidationNo> ListDisplayNo = appDatabase.daoMobileValidationNo()
+                    .getBytxtConstBitUseLimit("0", 10);
+
+
             int index = 1;
-            for (clsMobile_ValidationNo dtclsMobile_ValidationNo: ListDisplayNo) {
+            for (clsMobile_ValidationNo dtclsMobile_ValidationNo : ListDisplayNo) {
                 tr = new TableRow(getContext());
                 TextView tv_index = new TextView(getContext());
                 tv_index.setTextSize(12);
@@ -1607,11 +1778,11 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                 outlet_code.setBackgroundColor(Color.parseColor("#f0f0f0"));
                 outlet_code.setTextColor(Color.BLACK);
                 outlet_code.setGravity(Gravity.CENTER);
-                String txtPlanDate=dtclsMobile_ValidationNo.txtValidationNo;
+                String txtPlanDate = dtclsMobile_ValidationNo.txtValidationNo;
                 outlet_code.setText(txtPlanDate);
                 outlet_code.setLayoutParams(params);
                 tr.addView(outlet_code);
-                tlRealisasi.addView(tr,index++);
+                tlRealisasi.addView(tr, index++);
             }
         }
         android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(getContext());
@@ -1626,6 +1797,7 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
         alertD = alertDialogBuilder.create();
         alertD.show();
     }
+
     public void searchPOA() {
         LayoutInflater layoutInflater = LayoutInflater.from(getContext());
         final View promptView = layoutInflater.inflate(R.layout.layout_popup_poa, null);
@@ -1636,7 +1808,12 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
         clsMobile_trPOA _dt = new clsMobile_trPOA();
         viewListEmpty = promptView.findViewById(R.id.listNoData);
         ArrayList<clsMobile_trPOA> arrayOfPOA = new ArrayList<>();
-        ListOfclsMobile_trPOA = new Select().from(clsMobile_trPOA.class).where(_dt.txtConsttxtNamaProgram + " LIKE ?", "%" + etSearch.getText().toString() + "%").execute();
+
+        // ListOfclsMobile_trPOA = new Select().from(clsMobile_trPOA.class)
+        // .where(_dt.txtConsttxtNamaProgram + " LIKE ?", "%" + etSearch.getText().toString() + "%").execute();
+        ListOfclsMobile_trPOA = appDatabase.daoMobileTrPOA().getLiketxtConsttxtNamaProgram(etSearch.getText().toString());
+
+
         if (ListOfclsMobile_trPOA.size() > 0) {
             for (final clsMobile_trPOA _dtclsMobile_trPOA : ListOfclsMobile_trPOA) {
                 arrayOfPOA.add(_dtclsMobile_trPOA);
@@ -1654,7 +1831,7 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
         listData.setAdapter(adapter);
 
         View viewListEmpty = promptView.findViewById(R.id.listNoData);
-        if(arrayOfPOA.size() == 0)
+        if (arrayOfPOA.size() == 0)
             viewListEmpty.setVisibility(View.VISIBLE);
         else
             viewListEmpty.setVisibility(View.GONE);
@@ -1676,7 +1853,7 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AsyncCallSearchPOA _AsyncCallSearchPOA=new AsyncCallSearchPOA();
+                AsyncCallSearchPOA _AsyncCallSearchPOA = new AsyncCallSearchPOA();
 
                 _AsyncCallSearchPOA.execute();
                 /*
@@ -1747,7 +1924,7 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                     if (Build.VERSION.SDK_INT >= 24) {
                         Uri imageUri = Uri.parse(mCurrentPhotoPath);
                         File file = new File(imageUri.getPath());
-                        uri= file.getPath().toString();
+                        uri = file.getPath().toString();
                     }
                     txtPathImage1 = uri;
                     bitmap = BitmapFactory.decodeFile(uri, bitmapOptions);
@@ -1774,7 +1951,7 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                     if (Build.VERSION.SDK_INT >= 24) {
                         Uri imageUri = Uri.parse(mCurrentPhotoPath);
                         File file = new File(imageUri.getPath());
-                        uri= file.getPath().toString();
+                        uri = file.getPath().toString();
                     }
                     txtPathImage2 = uri;
                     bitmap = BitmapFactory.decodeFile(uri, bitmapOptions);
@@ -1796,12 +1973,12 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
     private void previewCapturedImage1(Bitmap photo) {
         try {
 //            dttAbsenUserData = _tAbsenUserBL.getDataCheckInActive();
-            Bitmap bitmap = _clsMainBL.resizeImageForBlob(photo);
+            Bitmap bitmap = _clsMainBL.resizeImageForBlob(photo, getActivity());
             imgPrevNoImg1.setVisibility(View.VISIBLE);
             ByteArrayOutputStream out = null;
             try {
                 out = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 0, out); // bmp is your Bitmap instance
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 70, out); // bmp is your Bitmap instance
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -1845,12 +2022,12 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
     private void previewCapturedImage2(Bitmap photo) {
         try {
 //            dttAbsenUserData = _tAbsenUserBL.getDataCheckInActive();
-            Bitmap bitmap = _clsMainBL.resizeImageForBlob(photo);
+            Bitmap bitmap = _clsMainBL.resizeImageForBlob(photo, getActivity());
             imgPrevNoImg2.setVisibility(View.VISIBLE);
             ByteArrayOutputStream out = null;
             try {
                 out = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 0, out); // bmp is your Bitmap instance
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 70, out); // bmp is your Bitmap instance
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -2008,8 +2185,13 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
             JSONObject JsonOutlet = null;
             JSONObject JsonResult = null;
             clsMobile_mVersionApp _clsMobile_mVersionApp = new clsMobile_mVersionApp();
-            List<clsMobile_mVersionApp> listOfclsMobile_mVersionApp = new Select().from(clsMobile_mVersionApp.class).where(_clsMobile_mVersionApp.txtConstidVersion + "=?", 1).execute();
-            clsMobile_trUserLogin dtclsMobile_trUserLogin = new Mobile_trUserLoginBL().CheckUserLogin();
+
+            // List<clsMobile_mVersionApp> listOfclsMobile_mVersionApp = new Select().from(clsMobile_mVersionApp.class)
+            // .where(_clsMobile_mVersionApp.txtConstidVersion + "=?", 1).execute();
+
+            List<clsMobile_mVersionApp> listOfclsMobile_mVersionApp = appDatabase.daoMobileMVersionApp().getByIDVersion("1");
+
+            clsMobile_trUserLogin dtclsMobile_trUserLogin = new Mobile_trUserLoginBL().CheckUserLogin(getActivity());
             try {
                 JsonOutlet = new JSONObject();
                 _JSONArray = new JSONArray();
@@ -2020,7 +2202,7 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                 JsonOutlet.put("TxtSearchName", "");
                 JsonOutlet.put("TxtOutletCode", dtclsMobile_MPartnerProfile.txtPartnerCRM);
                 _JSONArray.put(JsonOutlet);
-                JsonResult = _clsMainBL.PushData("DownloadDataOutletAliasByBranch_J", _JSONArray.toString());
+                JsonResult = _clsMainBL.PushData("DownloadDataOutletAliasByBranch_J", _JSONArray.toString(), getActivity());
 
                 //EditText txt = (EditText) findViewById(R.id.txtLoginEmail);
                 //roledata = new mUserRoleBL().getRoleAndOutlet(txtEmail1, pInfo.versionName);
@@ -2056,13 +2238,13 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                         String intresult = (String.valueOf(validJson.get("TxtResult")));
                         if (intresult.equals("1")) {
                             String txtGetDataJson = String.valueOf(validJson.get("TxtData"));
-                            JSONObject JsonDataTxtData=new JSONObject(txtGetDataJson);
+                            JSONObject JsonDataTxtData = new JSONObject(txtGetDataJson);
                             String txtGetDataJsonOutlet = String.valueOf(JsonDataTxtData.get("MPartnerProfileAlias"));
                             JSONArray JSONArrayOutlet = new JSONArray(txtGetDataJsonOutlet);
                             ArrayList<clsMobile_MPartnerProfile> arrayOfPartnerProfile = new ArrayList<>();
-                            ListTitle=new ArrayList<String>();
-                            ListDesc=new ArrayList<String>();
-                            int IndexSearhOutletAlias=0;
+                            ListTitle = new ArrayList<String>();
+                            ListDesc = new ArrayList<String>();
+                            int IndexSearhOutletAlias = 0;
                             if (JSONArrayOutlet.length() > 0) {
                                 ListOfclsMobile_MPartnerProfileAliasSearch = new ArrayList<clsMobile_MPartnerProfileAlias>();
                                 for (int i = 0; i < JSONArrayOutlet.length(); i++) {
@@ -2078,17 +2260,17 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                                     _clsMobile_MPartnerProfile.txtBranchName = String.valueOf(JSONObjectOutlet.get("TxtBranchName"));
                                     _clsMobile_MPartnerProfile.txtLongitude = String.valueOf(JSONObjectOutlet.get("TxtLongitude"));
                                     _clsMobile_MPartnerProfile.txtLatitude = String.valueOf(JSONObjectOutlet.get("TxtLatitude"));
-                                    _clsMobile_MPartnerProfile.txtAcc=String.valueOf(JSONObjectOutlet.get("TxtAcc"));
-                                    _clsMobile_MPartnerProfile.txtTipePartner=String.valueOf(JSONObjectOutlet.get("TxtTipePartner"));
+                                    _clsMobile_MPartnerProfile.txtAcc = String.valueOf(JSONObjectOutlet.get("TxtAcc"));
+                                    _clsMobile_MPartnerProfile.txtTipePartner = String.valueOf(JSONObjectOutlet.get("TxtTipePartner"));
                                     ListOfclsMobile_MPartnerProfileAliasSearch.add(_clsMobile_MPartnerProfile);
-                                    ListTitle.add(_clsMobile_MPartnerProfile.txtPartnerCRM +" - "+ _clsMobile_MPartnerProfile.txtNamaPartner);
+                                    ListTitle.add(_clsMobile_MPartnerProfile.txtPartnerCRM + " - " + _clsMobile_MPartnerProfile.txtNamaPartner);
                                     ListDesc.add(_clsMobile_MPartnerProfile.txtAlamat);
-                                    if(_clsMobile_MPartnerProfile.IntPartnerID.equals(dtclsMobile_MPartnerProfile.IntPartnerID)){
-                                    }else{
-                                        IndexSearhOutletAlias+=1;
+                                    if (_clsMobile_MPartnerProfile.IntPartnerID.equals(dtclsMobile_MPartnerProfile.IntPartnerID)) {
+                                    } else {
+                                        IndexSearhOutletAlias += 1;
                                     }
                                 }
-                                if(spnOutletAlias!=null){
+                                if (spnOutletAlias != null) {
                                     spnOutletAlias.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, ListTitle, ListDesc));
                                     spnOutletAlias.setEnabled(true);
                                     spnOutletAlias.setSelection(IndexSearhOutletAlias);
@@ -2145,8 +2327,12 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
             JSONObject JsonOutlet = null;
             JSONObject JsonResult = null;
             clsMobile_mVersionApp _clsMobile_mVersionApp = new clsMobile_mVersionApp();
-            List<clsMobile_mVersionApp> listOfclsMobile_mVersionApp = new Select().from(clsMobile_mVersionApp.class).where(_clsMobile_mVersionApp.txtConstidVersion + "=?", 1).execute();
-            clsMobile_trUserLogin dtclsMobile_trUserLogin = new Mobile_trUserLoginBL().CheckUserLogin();
+
+            // List<clsMobile_mVersionApp> listOfclsMobile_mVersionApp = new Select().from(clsMobile_mVersionApp.class)
+            // .where(_clsMobile_mVersionApp.txtConstidVersion + "=?", 1).execute();
+            List<clsMobile_mVersionApp> listOfclsMobile_mVersionApp = appDatabase.daoMobileMVersionApp().getByIDVersion("1");
+
+            clsMobile_trUserLogin dtclsMobile_trUserLogin = new Mobile_trUserLoginBL().CheckUserLogin(getActivity());
             try {
                 JsonOutlet = new JSONObject();
                 _JSONArray = new JSONArray();
@@ -2162,7 +2348,7 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                     JsonOutlet.put("TxtOutletCode", etSearch.getText().toString());
                 }
                 _JSONArray.put(JsonOutlet);
-                JsonResult = _clsMainBL.PushData("DownloadDataOutletByBranch_J", _JSONArray.toString());
+                JsonResult = _clsMainBL.PushData("DownloadDataOutletByBranch_J", _JSONArray.toString(), getActivity());
 
                 //EditText txt = (EditText) findViewById(R.id.txtLoginEmail);
                 //roledata = new mUserRoleBL().getRoleAndOutlet(txtEmail1, pInfo.versionName);
@@ -2198,7 +2384,7 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                         String intresult = (String.valueOf(validJson.get("TxtResult")));
                         if (intresult.equals("1")) {
                             String txtGetDataJson = String.valueOf(validJson.get("TxtData"));
-                            JSONObject JsonDataTxtData=new JSONObject(txtGetDataJson);
+                            JSONObject JsonDataTxtData = new JSONObject(txtGetDataJson);
                             String txtGetDataJsonOutlet = String.valueOf(JsonDataTxtData.get("MPartnerProfile"));
                             JSONArray JSONArrayOutlet = new JSONArray(txtGetDataJsonOutlet);
                             ArrayList<clsMobile_MPartnerProfile> arrayOfPartnerProfile = new ArrayList<>();
@@ -2219,8 +2405,8 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                                     _clsMobile_MPartnerProfile.txtBranchName = String.valueOf(JSONObjectOutlet.get("TxtBranchName"));
                                     _clsMobile_MPartnerProfile.txtLongitude = String.valueOf(JSONObjectOutlet.get("TxtLongitude"));
                                     _clsMobile_MPartnerProfile.txtLatitude = String.valueOf(JSONObjectOutlet.get("TxtLatitude"));
-                                    _clsMobile_MPartnerProfile.txtAcc=String.valueOf(JSONObjectOutlet.get("TxtAcc"));
-                                    _clsMobile_MPartnerProfile.txtTipePartner=String.valueOf(JSONObjectOutlet.get("TxtTipePartner"));
+                                    _clsMobile_MPartnerProfile.txtAcc = String.valueOf(JSONObjectOutlet.get("TxtAcc"));
+                                    _clsMobile_MPartnerProfile.txtTipePartner = String.valueOf(JSONObjectOutlet.get("TxtTipePartner"));
                                     ListOfclsMobile_MPartnerProfileSearch.add(_clsMobile_MPartnerProfile);
 
                                     arrayOfPartnerProfile.add(_clsMobile_MPartnerProfile);
@@ -2231,7 +2417,7 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                                         row.setLayoutParams(lp);
 
                                         TextView tvNamaPartner = new TextView(getContext());
-                                        tvNamaPartner.setText(_clsMobile_MPartnerProfile.txtPartnerCRM +" - "+ _clsMobile_MPartnerProfile.txtTipePartner + System.getProperty("line.separator") + _clsMobile_MPartnerProfile.txtNamaPartner + System.getProperty("line.separator") + _clsMobile_MPartnerProfile.txtAlamat);
+                                        tvNamaPartner.setText(_clsMobile_MPartnerProfile.txtPartnerCRM + " - " + _clsMobile_MPartnerProfile.txtTipePartner + System.getProperty("line.separator") + _clsMobile_MPartnerProfile.txtNamaPartner + System.getProperty("line.separator") + _clsMobile_MPartnerProfile.txtAlamat);
                                         tvNamaPartner.setGravity(Gravity.LEFT);
                                         row.addView(tvNamaPartner);
                                         row.setOnClickListener(new View.OnClickListener() {
@@ -2239,14 +2425,14 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                                             public void onClick(View v) {
                                                 dtclsMobile_MPartnerProfile = _clsMobile_MPartnerProfile;
                                                 etOutletName.setText(_clsMobile_MPartnerProfile.txtNamaPartner);
-                                                String txtLatitudeKNIS=_clsMobile_MPartnerProfile.txtLatitude;
-                                                String txtLongitudeKNIS=_clsMobile_MPartnerProfile.txtLongitude;
-                                                if(_clsMobile_MPartnerProfile.txtLatitude==null||_clsMobile_MPartnerProfile.txtLatitude.equals("null")){
-                                                    txtLatitudeKNIS="No Location";
+                                                String txtLatitudeKNIS = _clsMobile_MPartnerProfile.txtLatitude;
+                                                String txtLongitudeKNIS = _clsMobile_MPartnerProfile.txtLongitude;
+                                                if (_clsMobile_MPartnerProfile.txtLatitude == null || _clsMobile_MPartnerProfile.txtLatitude.equals("null")) {
+                                                    txtLatitudeKNIS = "No Location";
                                                     txtHDLati.setText("");
                                                 }
-                                                if(_clsMobile_MPartnerProfile.txtLongitude==null||_clsMobile_MPartnerProfile.txtLongitude.equals("null")){
-                                                    txtLongitudeKNIS="No Location";
+                                                if (_clsMobile_MPartnerProfile.txtLongitude == null || _clsMobile_MPartnerProfile.txtLongitude.equals("null")) {
+                                                    txtLongitudeKNIS = "No Location";
                                                     txtHDLong.setText("");
                                                 }
                                                 tvLatKNIS.setText("Lati : " + txtLatitudeKNIS);
@@ -2279,7 +2465,7 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                             ListViewOutletAdapter adapter = new ListViewOutletAdapter(getContext(), arrayOfPartnerProfile);
                             lvSearch.setAdapter(adapter);
 
-                            if(arrayOfPartnerProfile.size() == 0)
+                            if (arrayOfPartnerProfile.size() == 0)
                                 viewEmpty.setVisibility(View.VISIBLE);
                             else
                                 viewEmpty.setVisibility(View.GONE);
@@ -2291,27 +2477,27 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                                     dtclsMobile_MPartnerProfile = ListOfclsMobile_MPartnerProfileSearch.get(i);
                                     etOutletName.setText(ListOfclsMobile_MPartnerProfileSearch.get(i).txtNamaPartner);
-                                    String txtLatitudeKNIS=ListOfclsMobile_MPartnerProfileSearch.get(i).txtLatitude;
-                                    String txtLongitudeKNIS=ListOfclsMobile_MPartnerProfileSearch.get(i).txtLongitude;
-                                    if(ListOfclsMobile_MPartnerProfileSearch.get(i).txtLatitude==null||ListOfclsMobile_MPartnerProfileSearch.get(i).txtLatitude.equals("null")){
-                                        txtLatitudeKNIS="No Location";
+                                    String txtLatitudeKNIS = ListOfclsMobile_MPartnerProfileSearch.get(i).txtLatitude;
+                                    String txtLongitudeKNIS = ListOfclsMobile_MPartnerProfileSearch.get(i).txtLongitude;
+                                    if (ListOfclsMobile_MPartnerProfileSearch.get(i).txtLatitude == null || ListOfclsMobile_MPartnerProfileSearch.get(i).txtLatitude.equals("null")) {
+                                        txtLatitudeKNIS = "No Location";
                                         txtHDLati.setText("");
-                                    }else{
+                                    } else {
                                         txtHDLati.setText(dtclsMobile_MPartnerProfile.txtLatitude);
                                     }
-                                    if(ListOfclsMobile_MPartnerProfileSearch.get(i).txtLongitude==null||ListOfclsMobile_MPartnerProfileSearch.get(i).txtLongitude.equals("null")){
-                                        txtLongitudeKNIS="No Location";
+                                    if (ListOfclsMobile_MPartnerProfileSearch.get(i).txtLongitude == null || ListOfclsMobile_MPartnerProfileSearch.get(i).txtLongitude.equals("null")) {
+                                        txtLongitudeKNIS = "No Location";
                                         txtHDLong.setText("");
-                                    }else{
+                                    } else {
                                         txtHDLong.setText(dtclsMobile_MPartnerProfile.txtLongitude);
                                     }
                                     tvLatKNIS.setText("Lati : " + txtLatitudeKNIS);
                                     tvLongKNIS.setText("Long : " + txtLongitudeKNIS);
-                                    if(txtHDLati.getText().toString().equals("")==false || txtHDLong.getText().toString().equals("")==false){
+                                    if (txtHDLati.getText().toString().equals("") == false || txtHDLong.getText().toString().equals("") == false) {
                                         double latitudeOutlet = Double.parseDouble("0");
                                         double longitudeOutlet = Double.parseDouble("0");
-                                           latitudeOutlet = Double.parseDouble(dtclsMobile_MPartnerProfile.txtLatitude);
-                                        longitudeOutlet= Double.parseDouble(dtclsMobile_MPartnerProfile.txtLongitude);
+                                        latitudeOutlet = Double.parseDouble(dtclsMobile_MPartnerProfile.txtLatitude);
+                                        longitudeOutlet = Double.parseDouble(dtclsMobile_MPartnerProfile.txtLongitude);
                                         Location locationA = new Location("point A");
                                         locationA.setLatitude(Double.valueOf(lblLang.getText().toString()));
                                         locationA.setLongitude(Double.valueOf(lblLong.getText().toString()));
@@ -2321,17 +2507,17 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                                         locationB.setLongitude(longitudeOutlet);
 
                                         float distance = locationA.distanceTo(locationB);
-                                        intdistance=(int) Math.ceil(distance);
+                                        intdistance = (int) Math.ceil(distance);
                                         tvDistance.setText(String.valueOf((int) Math.ceil(distance)) + " meters");
-                                    }else{
+                                    } else {
                                         tvDistance.setText("0 meters");
                                     }
                                     tvTypeOutlet.setText(dtclsMobile_MPartnerProfile.txtTipePartner);
-                                    if(dtclsMobile_MPartnerProfile.txtTipePartner.equals("HCP")){
+                                    if (dtclsMobile_MPartnerProfile.txtTipePartner.equals("HCP")) {
                                         spnOutletAlias.setVisibility(View.VISIBLE);
-                                        AsyncCallSearchOutletAlias _AsyncCallSearchOutletAlias=new AsyncCallSearchOutletAlias();
+                                        AsyncCallSearchOutletAlias _AsyncCallSearchOutletAlias = new AsyncCallSearchOutletAlias();
                                         _AsyncCallSearchOutletAlias.execute();
-                                    }else{
+                                    } else {
                                         spnOutletAlias.setAdapter(null);
                                         spnOutletAlias.setVisibility(View.GONE);
                                     }
@@ -2391,22 +2577,30 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
             JSONObject JsonOutlet = null;
             JSONObject JsonResult = null;
             clsMobile_mVersionApp _clsMobile_mVersionApp = new clsMobile_mVersionApp();
-            List<clsMobile_mVersionApp> listOfclsMobile_mVersionApp = new Select().from(clsMobile_mVersionApp.class).where(_clsMobile_mVersionApp.txtConstidVersion + "=?", 1).execute();
-            clsMobile_trUserLogin dtclsMobile_trUserLogin = new Mobile_trUserLoginBL().CheckUserLogin();
-            String txtCabang ="";
-            List<clsMobile_MBranch> ListOfCabang=new Select().from(clsMobile_MBranch.class).execute();
+
+            //List<clsMobile_mVersionApp> listOfclsMobile_mVersionApp = new Select().from(clsMobile_mVersionApp.class)
+            // .where(_clsMobile_mVersionApp.txtConstidVersion + "=?", 1).execute();
+
+            List<clsMobile_mVersionApp> listOfclsMobile_mVersionApp = appDatabase.daoMobileMVersionApp().getByIDVersion("1");
+
+            clsMobile_trUserLogin dtclsMobile_trUserLogin = new Mobile_trUserLoginBL().CheckUserLogin(getActivity());
+            String txtCabang = "";
+
+            //List<clsMobile_MBranch> ListOfCabang = new Select().from(clsMobile_MBranch.class).execute();
+            List<clsMobile_MBranch> ListOfCabang = appDatabase.daoMobileMBranch().getAll();
+
             try {
-                int IndexCabang=0;
-                if(ListOfCabang.size()>0){
-                    for (clsMobile_MBranch dtclsMobile_MBranch :ListOfCabang) {
-                        if(IndexCabang>0){
-                            txtCabang+=",";
+                int IndexCabang = 0;
+                if (ListOfCabang.size() > 0) {
+                    for (clsMobile_MBranch dtclsMobile_MBranch : ListOfCabang) {
+                        if (IndexCabang > 0) {
+                            txtCabang += ",";
                         }
-                        txtCabang+=dtclsMobile_MBranch.IntCabangID;
-                        IndexCabang+=1;
+                        txtCabang += dtclsMobile_MBranch.IntCabangID;
+                        IndexCabang += 1;
                     }
-                }else{
-                    txtCabang=dtclsMobile_trUserLogin.IntCabangID;
+                } else {
+                    txtCabang = dtclsMobile_trUserLogin.IntCabangID;
                 }
                 JsonOutlet = new JSONObject();
                 _JSONArray = new JSONArray();
@@ -2416,7 +2610,7 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                 JsonOutlet.put("IntCabangID", txtCabang);
                 JsonOutlet.put("TxtSearchName", etSearch.getText().toString());
                 _JSONArray.put(JsonOutlet);
-                JsonResult = _clsMainBL.PushData("DownloadDataPOAByBranch_J", _JSONArray.toString());
+                JsonResult = _clsMainBL.PushData("DownloadDataPOAByBranch_J", _JSONArray.toString(), getActivity());
 
                 //EditText txt = (EditText) findViewById(R.id.txtLoginEmail);
                 //roledata = new mUserRoleBL().getRoleAndOutlet(txtEmail1, pInfo.versionName);
@@ -2452,14 +2646,14 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                         JSONObject validJson = new JSONObject(txtvalidJson);
                         String intresult = (String.valueOf(validJson.get("TxtResult")));
                         if (intresult.equals("1")) {
-                            arrayOfPOA=new ArrayList<clsMobile_trPOA>();
+                            arrayOfPOA = new ArrayList<clsMobile_trPOA>();
                             String txtGetDataJson = String.valueOf(validJson.get("TxtData"));
                             //JSONObject JsonData=new JSONObject(txtGetDataJson);
                             JSONArray JSONArrayPOA = new JSONArray(txtGetDataJson);
                             if (JSONArrayPOA.length() > 0) {
                                 for (int i = 0; i < JSONArrayPOA.length(); i++) {
                                     JSONObject JSONObjectPOA = JSONArrayPOA.getJSONObject(i);
-                                    clsMobile_trPOA _clsMobile_trPOA=new clsMobile_trPOA();
+                                    clsMobile_trPOA _clsMobile_trPOA = new clsMobile_trPOA();
                                     Long IntProgramID = java.lang.Long.valueOf(String.valueOf(JSONObjectPOA.get("IntProgramID")));
                                     _clsMobile_trPOA.intProgramID = IntProgramID;
                                     _clsMobile_trPOA.txtNamaProgram = String.valueOf(JSONObjectPOA.get("TxtNamaProgram"));
@@ -2471,7 +2665,7 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                                     arrayOfPOA.add(_clsMobile_trPOA);
                                     ListViewPOAAdapter adapter = new ListViewPOAAdapter(getContext(), arrayOfPOA);
                                     listData.setAdapter(adapter);
-                                    if(arrayOfPOA.size() == 0)
+                                    if (arrayOfPOA.size() == 0)
                                         viewListEmpty.setVisibility(View.VISIBLE);
                                     else
                                         viewListEmpty.setVisibility(View.GONE);
@@ -2526,7 +2720,7 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                     intProcesscancel = 1;
                 }
             });
-                Dialog.show();
+            Dialog.show();
         }
 
         @Override
@@ -2534,11 +2728,12 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
             Dialog.dismiss();
         }
     }
+
     private void LoadData() {
         _clsMainBL = new clsMainBL();
         String name = "";
         try {
-            IMAGE_DIRECTORY_NAME = new clsHardCode().txtPathApp ;
+            IMAGE_DIRECTORY_NAME = new clsHardCode().txtPathApp;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -2556,7 +2751,12 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
         txtHDLong.setText("");
 
         dtclsMobile_trVisitPlan_Detail = new clsMobile_trVisitPlan_Detail();
-        final List<clsMobile_trVisitPlan_Detail> ListOfclsMobile_trVisitPlan_Detail = new Select().from(clsMobile_trVisitPlan_Detail.class).where(dtclsMobile_trVisitPlan_Detail.txtConsttxtGUI_Detail + "=?", Id).execute();
+        // final List<clsMobile_trVisitPlan_Detail> ListOfclsMobile_trVisitPlan_Detail = new Select()
+        // .from(clsMobile_trVisitPlan_Detail.class)
+        // .where(dtclsMobile_trVisitPlan_Detail.txtConsttxtGUI_Detail + "=?", Id).execute();
+        final List<clsMobile_trVisitPlan_Detail> ListOfclsMobile_trVisitPlan_Detail = appDatabase.daoMobileTrVisitPlanDetail()
+                .getBytxtConsttxtGUI_Detail(Id);
+
         if (ListOfclsMobile_trVisitPlan_Detail.size() > 0) {
 
 //            trdtPlan.setVisibility(View.VISIBLE);
@@ -2583,7 +2783,17 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
             //etPreNC.setClickable(false);
             dtclsMobile_trVisitPlan_Detail = ListOfclsMobile_trVisitPlan_Detail.get(0);
             clsMobile_trVisitPlan_Header _clsMobile_trVisitPlan_Header = new clsMobile_trVisitPlan_Header();
-            List<clsMobile_trVisitPlan_Header> ListOfclsMobile_trVisitPlan_Header = new Select().from(clsMobile_trVisitPlan_Header.class).where(_clsMobile_trVisitPlan_Header.txtConstIntVisitPlan_HeaderID + "=?", dtclsMobile_trVisitPlan_Detail.intVisitPlan_HeaderID).execute();
+
+
+            // List<clsMobile_trVisitPlan_Header> ListOfclsMobile_trVisitPlan_Header = new Select()
+            // .from(clsMobile_trVisitPlan_Header.class)
+            // .where(_clsMobile_trVisitPlan_Header.txtConstIntVisitPlan_HeaderID + "=?",
+            // dtclsMobile_trVisitPlan_Detail.intVisitPlan_HeaderID).execute();
+
+            List<clsMobile_trVisitPlan_Header> ListOfclsMobile_trVisitPlan_Header = appDatabase.daoMobileTrVisitPlanHeader()
+                    .getbyVisitPlan_HeaderID(Integer.parseInt(dtclsMobile_trVisitPlan_Detail.intVisitPlan_HeaderID));
+
+
             if (ListOfclsMobile_trVisitPlan_Header.size() > 0) {
                 _clsMobile_trVisitPlan_Header = ListOfclsMobile_trVisitPlan_Header.get(0);
                 intIndex = _clsMainBL.getIndexListOfclsSpinnerByname(_clsMobile_trVisitPlan_Header.intBranchID, "", listSpinnerBranch);
@@ -2591,7 +2801,11 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                     spnBranch.setSelection(intIndex);
             }
             clsMobile_trVisitPlan_Detail_Item _clsMobile_trVisitPlan_Detail_Item = new clsMobile_trVisitPlan_Detail_Item();
-            ListOfclsMobile_trVisitPlan_Detail_Item = new Select().from(clsMobile_trVisitPlan_Detail_Item.class).where(_clsMobile_trVisitPlan_Detail_Item.txtConsttxtGUI_Detail + "=?", dtclsMobile_trVisitPlan_Detail.txtGUI_Detail).orderBy(_clsMobile_trVisitPlan_Detail_Item.txtConsintNo + " ASC ").execute();
+            // ListOfclsMobile_trVisitPlan_Detail_Item = new Select().from(clsMobile_trVisitPlan_Detail_Item.class)
+            // .where(_clsMobile_trVisitPlan_Detail_Item.txtConsttxtGUI_Detail + "=?", dtclsMobile_trVisitPlan_Detail.txtGUI_Detail)
+            // .orderBy(_clsMobile_trVisitPlan_Detail_Item.txtConsintNo + " ASC ").execute();
+            ListOfclsMobile_trVisitPlan_Detail_Item = appDatabase.daoMobileTrVisitPlanDetailItem()
+                    .getbytxtConsttxtGUI_DetailOrdertxtConsintNo(_clsMobile_trVisitPlan_Detail_Item.txtConsttxtGUI_Detail);
             /*
             intIndex=_clsMainBL.getIndexListOfclsSpinnerByname(dtclsMobile_trVisitPlan_Detail.txtValidationNo,"",listSpinnerNoRealiasasi);
             if(intIndex!=-1)
@@ -2600,20 +2814,20 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
             intIndex = _clsMainBL.getIndexListOfclsSpinnerByname(dtclsMobile_trVisitPlan_Detail.intCategoryID, "", listSpinnermVisitPlanCategory);
             if (intIndex != -1)
                 spnCategory.setSelection(intIndex);
-            txtIdCategory=dtclsMobile_trVisitPlan_Detail.intCategoryID;
-            if (dtclsMobile_trVisitPlan_Detail.intCategoryID.equals(enum_VisitPlanCategory.OUTLET.getValue()+"")) {
+            txtIdCategory = dtclsMobile_trVisitPlan_Detail.intCategoryID;
+            if (dtclsMobile_trVisitPlan_Detail.intCategoryID.equals(enum_VisitPlanCategory.OUTLET.getValue() + "")) {
                 tvDistance.setText("0");
                 input_layout_outlet_search.setVisibility(View.VISIBLE);
                 input_layout_poa_search.setVisibility(View.GONE);
                 lnOutletLocation.setVisibility(View.VISIBLE);
 
-            } else if (dtclsMobile_trVisitPlan_Detail.intCategoryID.equals(enum_VisitPlanCategory.ACTIVITY.getValue()+"")) {
+            } else if (dtclsMobile_trVisitPlan_Detail.intCategoryID.equals(enum_VisitPlanCategory.ACTIVITY.getValue() + "")) {
                 tvDistance.setText("0");
                 RLPreNC.setVisibility(View.VISIBLE);
                 input_layout_poa_search.setVisibility(View.VISIBLE);
                 input_layout_outlet_search.setVisibility(View.GONE);
                 lnOutletLocation.setVisibility(View.GONE);
-            }else if(dtclsMobile_trVisitPlan_Detail.intCategoryID.equals(enum_VisitPlanCategory.CUTI.getValue()+"")||dtclsMobile_trVisitPlan_Detail.intCategoryID.equals(enum_VisitPlanCategory.PERJALANAN_DINAS.getValue()+"")){
+            } else if (dtclsMobile_trVisitPlan_Detail.intCategoryID.equals(enum_VisitPlanCategory.CUTI.getValue() + "") || dtclsMobile_trVisitPlan_Detail.intCategoryID.equals(enum_VisitPlanCategory.PERJALANAN_DINAS.getValue() + "")) {
                 ShowForLocationAndPhoto(false);
                 input_layout_outlet_search.setVisibility(View.GONE);
                 input_layout_poa_search.setVisibility(View.GONE);
@@ -2644,9 +2858,20 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
             clsMobile_MPartnerProfile _clsMobile_MPartnerProfile = new clsMobile_MPartnerProfile();
             clsMobile_MPartnerProfileAlias _clsMobile_MPartnerProfileAlias = new clsMobile_MPartnerProfileAlias();
             clsMobile_trPOA _clsMobile_trPOA = new clsMobile_trPOA();
-            List<clsMobile_MPartnerProfile> ListDataclsMobile_MPartnerProfile = new Select().from(clsMobile_MPartnerProfile.class).where(_clsMobile_MPartnerProfile.txtConsttxtPartnerCRM + "=?", dtclsMobile_trVisitPlan_Detail.txtNoKode).execute();
 
-            List<clsMobile_trPOA> ListDataclsMobile_trPOA = new Select().from(clsMobile_trPOA.class).where(_clsMobile_trPOA.txtConstintProgramID + "=?", dtclsMobile_trVisitPlan_Detail.txtNoKode).execute();
+            // List<clsMobile_MPartnerProfile> ListDataclsMobile_MPartnerProfile = new Select().from(clsMobile_MPartnerProfile.class)
+            // .where(_clsMobile_MPartnerProfile.txtConsttxtPartnerCRM + "=?", dtclsMobile_trVisitPlan_Detail.txtNoKode).execute();
+
+            List<clsMobile_MPartnerProfile> ListDataclsMobile_MPartnerProfile = appDatabase.daoMobileMPartnerProfile()
+                    .getBytxtConsttxtPartnerCRM(_clsMobile_MPartnerProfile.txtConsttxtPartnerCRM);
+
+            // List<clsMobile_trPOA> ListDataclsMobile_trPOA = new Select().from(clsMobile_trPOA.class)
+            // .where(_clsMobile_trPOA.txtConstintProgramID + "=?", dtclsMobile_trVisitPlan_Detail.txtNoKode)
+            // .execute();
+            List<clsMobile_trPOA> ListDataclsMobile_trPOA = appDatabase.daoMobileTrPOA()
+                    .getBytxtConstintProgramID(dtclsMobile_trVisitPlan_Detail.txtNoKode);
+
+
             if (ListDataclsMobile_MPartnerProfile.size() > 0 && spnCategory.getSelectedItem().toString().equals("OUTLET")) {
                 dtclsMobile_MPartnerProfile = ListDataclsMobile_MPartnerProfile.get(0);
                 etOutletName.setText(ListDataclsMobile_MPartnerProfile.get(0).txtNamaPartner);
@@ -2654,42 +2879,49 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
 //                trOutlet.setVisibility(View.VISIBLE);
                 tvTypeOutlet.setText(dtclsMobile_MPartnerProfile.txtTipePartner);
                 spnOutletAlias.setVisibility(View.VISIBLE);
-                String txtLatitudeKNIS=null;
-                String txtLongitudeKNIS=null;
-                if(dtclsMobile_MPartnerProfile.txtTipePartner.equals("HCP")){
-                    List<clsMobile_MPartnerProfileAlias> ListDataclsMobile_MPartnerProfileAlias = new Select().from(clsMobile_MPartnerProfileAlias.class).where(_clsMobile_MPartnerProfileAlias.txtConstintPartnerIDSub + "=?", dtclsMobile_MPartnerProfile.IntPartnerID.toString()).execute();
-                    if(ListDataclsMobile_MPartnerProfileAlias.size()>0){
-                        ListOfclsMobile_MPartnerProfileAliasSearch=ListDataclsMobile_MPartnerProfileAlias;
-                        ListTitle=new ArrayList<String>();
-                        ListDesc=new ArrayList<String>();
-                        int IndexSearhOutletAlias=0;
+                String txtLatitudeKNIS = null;
+                String txtLongitudeKNIS = null;
+                if (dtclsMobile_MPartnerProfile.txtTipePartner.equals("HCP")) {
+
+                    // List<clsMobile_MPartnerProfileAlias> ListDataclsMobile_MPartnerProfileAlias = new Select()
+                    // .from(clsMobile_MPartnerProfileAlias.class)
+                    // .where(_clsMobile_MPartnerProfileAlias.txtConstintPartnerIDSub + "=?",
+                    // dtclsMobile_MPartnerProfile.IntPartnerID.toString()).execute();
+
+                    List<clsMobile_MPartnerProfileAlias> ListDataclsMobile_MPartnerProfileAlias = appDatabase.daoMobileMPartnerProfileAlias().getBytxtConstintPartnerIDSub(dtclsMobile_MPartnerProfile.IntPartnerID.toString());
+
+                    if (ListDataclsMobile_MPartnerProfileAlias.size() > 0) {
+                        ListOfclsMobile_MPartnerProfileAliasSearch = ListDataclsMobile_MPartnerProfileAlias;
+                        ListTitle = new ArrayList<String>();
+                        ListDesc = new ArrayList<String>();
+                        int IndexSearhOutletAlias = 0;
                         for (clsMobile_MPartnerProfileAlias _dtclsMobile_MPartnerProfileAlias : ListDataclsMobile_MPartnerProfileAlias) {
-                            ListTitle.add(_dtclsMobile_MPartnerProfileAlias.txtPartnerCRM +" - "+ _dtclsMobile_MPartnerProfileAlias.txtNamaPartner);
+                            ListTitle.add(_dtclsMobile_MPartnerProfileAlias.txtPartnerCRM + " - " + _dtclsMobile_MPartnerProfileAlias.txtNamaPartner);
                             ListDesc.add(_dtclsMobile_MPartnerProfileAlias.txtAlamat);
-                            if(_dtclsMobile_MPartnerProfileAlias.IntPartnerID.equals(dtclsMobile_MPartnerProfile.IntPartnerID)){
+                            if (_dtclsMobile_MPartnerProfileAlias.IntPartnerID.equals(dtclsMobile_MPartnerProfile.IntPartnerID)) {
                                 break;
-                            }else{
-                                IndexSearhOutletAlias+=1;
+                            } else {
+                                IndexSearhOutletAlias += 1;
                             }
                         }
                         spnOutletAlias.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, ListTitle, ListDesc));
                         spnOutletAlias.setEnabled(true);
                         spnOutletAlias.setSelection(IndexSearhOutletAlias);
                     }
-                }else{
+                } else {
                     spnOutletAlias.setVisibility(View.GONE);
-                    txtLatitudeKNIS=ListDataclsMobile_MPartnerProfile.get(0).txtLatitude;
-                    txtLongitudeKNIS=ListDataclsMobile_MPartnerProfile.get(0).txtLongitude;
-                    if(txtLatitudeKNIS==null||txtLatitudeKNIS.equals("null")){
-                        txtLatitudeKNIS="No Location";
+                    txtLatitudeKNIS = ListDataclsMobile_MPartnerProfile.get(0).txtLatitude;
+                    txtLongitudeKNIS = ListDataclsMobile_MPartnerProfile.get(0).txtLongitude;
+                    if (txtLatitudeKNIS == null || txtLatitudeKNIS.equals("null")) {
+                        txtLatitudeKNIS = "No Location";
                         txtHDLati.setText("");
-                    }else{
+                    } else {
                         txtHDLati.setText(txtLatitudeKNIS);
                     }
-                    if(txtLongitudeKNIS==null||txtLongitudeKNIS.equals("null")){
-                        txtLongitudeKNIS="No Location";
+                    if (txtLongitudeKNIS == null || txtLongitudeKNIS.equals("null")) {
+                        txtLongitudeKNIS = "No Location";
                         txtHDLong.setText("");
-                    }else{
+                    } else {
                         txtHDLong.setText(txtLongitudeKNIS);
                     }
                     //tvLatKNIS.setText("Lati : " + ListDataclsMobile_MPartnerProfile.get(0).txtLatitude);
@@ -2726,7 +2958,13 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                 lblAcc.setText(_clsMobile_trVisitPlan_Detail_Item.txtAccuracy);
                 for (clsMobile_trVisitPlan_Detail_Item dt : ListOfclsMobile_trVisitPlan_Detail_Item) {
                     clsMobile_mBinaryFile dtclsMobile_mBinaryFile = new clsMobile_mBinaryFile();
-                    List<clsMobile_mBinaryFile> ListOfclsMobile_mBinaryFile = new Select().from(clsMobile_mBinaryFile.class).where(dtclsMobile_mBinaryFile.txtConsttxtGUI_IDTable + "=?", dt.txtGUI_Detail_Item).execute();
+
+                    // List<clsMobile_mBinaryFile> ListOfclsMobile_mBinaryFile = new Select()
+                    // .from(clsMobile_mBinaryFile.class)
+                    // .where(dtclsMobile_mBinaryFile.txtConsttxtGUI_IDTable + "=?", dt.txtGUI_Detail_Item).execute();
+                    List<clsMobile_mBinaryFile> ListOfclsMobile_mBinaryFile = appDatabase.daoMobile_mBinaryFile()
+                            .getbytxtGUI_IDTable(dt.txtGUI_Detail_Item);
+
                     if (dt.intNo.equals("1")) {
                         if (ListOfclsMobile_mBinaryFile.size() > 0) {
                             dtclsMobile_mBinaryFile = ListOfclsMobile_mBinaryFile.get(0);
@@ -2735,9 +2973,9 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                                 Bitmap photo_view = Bitmap.createScaledBitmap(dtBitmap, 150, 150, true);
                                 imgPrevNoImg1.setImageBitmap(photo_view);
                                 dtBitmap.recycle();
-                                dtBitmap=null;
+                                dtBitmap = null;
                                 photo_view.recycle();
-                                photo_view=null;
+                                photo_view = null;
                             }
                         }
                     } else if (dt.intNo.equals("2")) {
@@ -2748,9 +2986,9 @@ public class CallPlanFragment extends Fragment implements ConnectionCallbacks, O
                                 Bitmap photo_view = Bitmap.createScaledBitmap(dtBitmap, 150, 150, true);
                                 imgPrevNoImg2.setImageBitmap(photo_view);
                                 dtBitmap.recycle();
-                                dtBitmap=null;
+                                dtBitmap = null;
                                 photo_view.recycle();
-                                photo_view=null;
+                                photo_view = null;
                             }
                         }
                     }

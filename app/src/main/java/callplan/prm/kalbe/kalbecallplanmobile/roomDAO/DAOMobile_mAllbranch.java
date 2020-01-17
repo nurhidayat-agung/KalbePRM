@@ -4,6 +4,7 @@ package callplan.prm.kalbe.kalbecallplanmobile.roomDAO;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -20,11 +21,14 @@ public interface DAOMobile_mAllbranch {
     @Query("SELECT * FROM Mobile_mAllBranch")
     List<clsMobile_mAllbranch> getAll();
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(clsMobile_mAllbranch mAllbranch);
 
     @Delete
     void delete(clsMobile_mAllbranch mAllbranch);
+
+    @Query("delete from mobile_mallbranch")
+    void delete();
 
     @Update
     void update(clsMobile_mAllbranch mAllbranch);

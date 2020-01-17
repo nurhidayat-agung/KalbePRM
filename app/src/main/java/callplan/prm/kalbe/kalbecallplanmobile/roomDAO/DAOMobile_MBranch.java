@@ -3,6 +3,7 @@ package callplan.prm.kalbe.kalbecallplanmobile.roomDAO;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -20,7 +21,7 @@ public interface DAOMobile_MBranch {
     @Query("SELECT * FROM Mobile_mBranch")
     List<clsMobile_MBranch> getAll();
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(clsMobile_MBranch mBranch);
 
     @Delete
@@ -28,4 +29,11 @@ public interface DAOMobile_MBranch {
 
     @Update
     void update(clsMobile_MBranch mBranch);
+
+    @Query("select * from mobile_mbranch where IntCabangID = :txtCabangID")
+    List<clsMobile_MBranch> gettxtConstIntCabangID(Long txtCabangID);
+
+    @Query("delete from mobile_mbranch")
+    void delete();
+
 }

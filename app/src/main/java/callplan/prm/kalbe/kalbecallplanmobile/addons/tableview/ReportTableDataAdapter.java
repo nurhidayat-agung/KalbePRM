@@ -9,7 +9,8 @@ import android.widget.TextView;
 import java.text.NumberFormat;
 import java.util.List;
 
-import callplan.prm.kalbe.callplanlibrary.common.ReportTable;
+// import callplan.prm.kalbe.callplanlibrary.common.ReportTable;
+import callplan.prm.kalbe.kalbecallplanmobile.model.ReportTable;
 import de.codecrafters.tableview.TableDataAdapter;
 
 public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {

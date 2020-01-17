@@ -21,31 +21,32 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
-    <!-- for android badge -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- for android badge -->
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
-    <uses-permission android:name="com.android.launcher.permission.WRITE_SETTINGS" />
-    <!-- for Samsung badge -->
+    <uses-permission android:name="com.android.launcher.permission.WRITE_SETTINGS" /> <!-- for Samsung badge -->
     <uses-permission android:name="com.sec.android.provider.badge.permission.READ" />
-    <uses-permission android:name="com.sec.android.provider.badge.permission.WRITE" />
-    <!-- for htc badge -->
+    <uses-permission android:name="com.sec.android.provider.badge.permission.WRITE" /> <!-- for htc badge -->
     <uses-permission android:name="com.htc.launcher.permission.READ_SETTINGS" />
-    <uses-permission android:name="com.htc.launcher.permission.UPDATE_SHORTCUT" />
-    <!-- for sony badge -->
-    <uses-permission android:name="com.sonyericsson.home.permission.BROADCAST_BADGE" />
-    <!-- for apex badge -->
+    <uses-permission android:name="com.htc.launcher.permission.UPDATE_SHORTCUT" /> <!-- for sony badge -->
+    <uses-permission android:name="com.sonyericsson.home.permission.BROADCAST_BADGE" /> <!-- for apex badge -->
     <uses-permission android:name="com.anddoes.launcher.permission.UPDATE_COUNT" />
 
     <application
+        android:name=".app.AppPRM"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="true"
         android:largeHeap="true"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:overrideLibrary="com.google.android.gms.appindexing">
 
+        <activity android:name=".DummyRequest">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
         <activity
             android:name=".ActivityFlash"
             android:configChanges="orientation|screenSize">
@@ -57,34 +58,28 @@
         <activity
             android:name=".LoginActivity"
             android:configChanges="orientation|screenSize" />
-
         <activity
             android:name=".MainMenu"
-            android:configChanges="orientation|screenSize" />
-
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.VIEW"/>-->
-                <!--<action android:name="android.intent.action.SEND"/>-->
-                <!--<category android:name="android.intent.category.DEFAULT"/>-->
-                <!--<data android:mimeType="*/*"/>-->
-            <!--</intent-filter>-->
-
+            android:configChanges="orientation|screenSize" /> <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.VIEW"/> -->
+        <!-- <action android:name="android.intent.action.SEND"/> -->
+        <!-- <category android:name="android.intent.category.DEFAULT"/> -->
+        <!-- <data android:mimeType="*/*"/> -->
+        <!-- </intent-filter> -->
         <activity
             android:name=".CropDisplayPicture"
+            android:configChanges="orientation|keyboardHidden"
             android:label=""
-            android:theme="@style/Theme.AppCompat"
             android:screenOrientation="portrait"
-            android:configChanges="orientation|keyboardHidden"/>
-
- <!--
+            android:theme="@style/Theme.AppCompat" />
+        <!--
         <provider
             android:name="callplan.prm.kalbe.kalbecallplanmobile.CallPlanProvider"
             android:authorities="callplan.prm.kalbe.kalbecallplanmobile.CallPlanProvider"
             android:exported="false"
             android:multiprocess="false" >
         </provider>
--->
-
+        -->
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -92,47 +87,38 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
-        </provider>
-
-<!--        <provider-->
-<!--            android:name="com.activeandroid.content.ContentProvider"-->
-<!--            android:authorities="${applicationId}"-->
-<!--            android:enabled="true"-->
-<!--            android:exported="false">-->
-<!--        </provider>-->
-
-
+                android:resource="@xml/provider_paths" />
+        </provider> <!-- <provider -->
+        <!-- android:name="com.activeandroid.content.ContentProvider" -->
+        <!-- android:authorities="${applicationId}" -->
+        <!-- android:enabled="true" -->
+        <!-- android:exported="false"> -->
+        <!-- </provider> -->
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="7bc387f6ab6416ef9ff556b12ad509220dd5517a" />
-
-<!--        <meta-data-->
-<!--            android:name="com.google.android.gms.version"-->
-<!--            android:value="@integer/google_play_services_version" />-->
-
+            android:value="7bc387f6ab6416ef9ff556b12ad509220dd5517a" /> <!-- <meta-data -->
+        <!-- android:name="com.google.android.gms.version" -->
+        <!-- android:value="@integer/google_play_services_version" /> -->
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyC8ZaU1H_c2JN7wRHbCbSeCU9XGTDYwL6A" />
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-
-        <service android:name="callplan.prm.kalbe.kalbecallplanmobile.service.MyServiceNative">
+        <service android:name=".service.MyServiceNative">
             <intent-filter>
                 <action android:name="callplan.prm.kalbe.kalbecallplanmobile.service.MyServiceNative" />
             </intent-filter>
         </service>
-        <service android:name="callplan.prm.kalbe.kalbecallplanmobile.service.MyNotificationService">
+        <service android:name=".service.MyNotificationService">
             <intent-filter>
                 <action android:name="callplan.prm.kalbe.kalbecallplanmobile.service.MyNotificationService" />
             </intent-filter>
         </service>
 
         <receiver
-            android:name="callplan.prm.kalbe.kalbecallplanmobile.service.MyRebootReceiver"
+            android:name=".service.MyRebootReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -140,7 +126,6 @@
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
             </intent-filter>
         </receiver>
-
     </application>
 
 </manifest>

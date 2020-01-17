@@ -11,19 +11,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.graphics.Bitmap;
-import com.activeandroid.query.Select;
 import com.theartofdev.edmodo.cropper.CropImage;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import callplan.prm.kalbe.callplanlibrary.ENUM.enum_mconfig;
-import callplan.prm.kalbe.callplanlibrary.common.clsMobile_MBranch;
-import callplan.prm.kalbe.callplanlibrary.common.clsMobile_mBinaryFile;
-import callplan.prm.kalbe.callplanlibrary.common.clsMobile_trUserLogin;
-import callplan.prm.kalbe.callplanlibrary.common.clsMobile_trVisitPlan_Detail;
-import callplan.prm.kalbe.callplanlibrary.common.clsMobile_trVisitPlan_Header;
+//import callplan.prm.kalbe.callplanlibrary.ENUM.enum_mconfig;
+//import callplan.prm.kalbe.callplanlibrary.common.clsMobile_MBranch;
+//import callplan.prm.kalbe.callplanlibrary.common.clsMobile_mBinaryFile;
+//import callplan.prm.kalbe.callplanlibrary.common.clsMobile_trUserLogin;
+//import callplan.prm.kalbe.callplanlibrary.common.clsMobile_trVisitPlan_Detail;
+//import callplan.prm.kalbe.callplanlibrary.common.clsMobile_trVisitPlan_Header;
 import callplan.prm.kalbe.kalbecallplanmobile.bl.Mobile_mConfigBL;
 import callplan.prm.kalbe.kalbecallplanmobile.bl.clsMainBL;
+import callplan.prm.kalbe.kalbecallplanmobile.model.clsMobile_MBranch;
+import callplan.prm.kalbe.kalbecallplanmobile.model.clsMobile_mBinaryFile;
+import callplan.prm.kalbe.kalbecallplanmobile.model.clsMobile_trUserLogin;
+import callplan.prm.kalbe.kalbecallplanmobile.model.clsMobile_trVisitPlan_Detail;
+import callplan.prm.kalbe.kalbecallplanmobile.model.clsMobile_trVisitPlan_Header;
+import callplan.prm.kalbe.kalbecallplanmobile.app.AppDatabase;
+import callplan.prm.kalbe.kalbecallplanmobile.roomenum.enum_mconfig;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
@@ -35,6 +42,8 @@ public class HomeFragment extends Fragment {
     View v;
     TextView tvTotalCallPlan,tvTotalRealisasi,tvTotalUnplan, tvUsername, tvEmail, tvBranch, tvLatestCallPlanDesc, tvLatestCallPlanDate,tvLatestCallPlanTitle;
     clsMainBL _clsMainBL;
+    private AppDatabase appDatabase;
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -44,6 +53,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_home, container, false);
+        appDatabase = AppDatabase.getDatabase(getActivity());
         _clsMainBL=new clsMainBL();
         tvTotalCallPlan = (TextView) v.findViewById(R.id.tvTotalCallPlan);
         tvTotalRealisasi = (TextView) v.findViewById(R.id.tvTotalRealisasi);
@@ -59,10 +69,30 @@ public class HomeFragment extends Fragment {
         final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
         clsMobile_trVisitPlan_Detail _clsMobile_trVisitPlan_Detail=new clsMobile_trVisitPlan_Detail();
-        final List<clsMobile_trVisitPlan_Header> ListOfDetailCallHeader = new Select().from(clsMobile_trVisitPlan_Header.class).execute();
-        final List<clsMobile_trVisitPlan_Detail> ListOfDetailCall = new Select().from(clsMobile_trVisitPlan_Detail.class).where(_clsMobile_trVisitPlan_Detail.txtConstdtPlanDate+" is not null").orderBy(_clsMobile_trVisitPlan_Detail.txtConstdtPlanDate+" DESC" ).execute();
-        final List<clsMobile_trVisitPlan_Detail> ListOfDetailUnplan = new Select().from(clsMobile_trVisitPlan_Detail.class).where(_clsMobile_trVisitPlan_Detail.txtConstdtPlanDate+" is null").execute();
-        final List<clsMobile_trVisitPlan_Detail> ListOfDetailRealisasi = new Select().from(clsMobile_trVisitPlan_Detail.class).where(_clsMobile_trVisitPlan_Detail.txtConstdtPlanDate+" is not null AND "+_clsMobile_trVisitPlan_Detail.txtConstintSubmit+" in (2,3)").execute();
+        // final List<clsMobile_trVisitPlan_Header> ListOfDetailCallHeader = new Select()
+        // .from(clsMobile_trVisitPlan_Header.class).execute();
+        final List<clsMobile_trVisitPlan_Header> ListOfDetailCallHeader = appDatabase.daoMobileTrVisitPlanHeader().getAll();
+
+        //final List<clsMobile_trVisitPlan_Detail> ListOfDetailCall = new Select()
+        // .from(clsMobile_trVisitPlan_Detail.class)
+        // .where(_clsMobile_trVisitPlan_Detail.txtConstdtPlanDate+" is not null")
+        // .orderBy(_clsMobile_trVisitPlan_Detail.txtConstdtPlanDate+" DESC" ).execute();
+        final List<clsMobile_trVisitPlan_Detail> ListOfDetailCall = appDatabase.daoMobileTrVisitPlanDetail()
+                .gettxtConstdtPlanDateNotNullOrdertxtConstdtPlanDate();
+
+        // final List<clsMobile_trVisitPlan_Detail> ListOfDetailUnplan = new Select()
+        // .from(clsMobile_trVisitPlan_Detail.class)
+        // .where(_clsMobile_trVisitPlan_Detail.txtConstdtPlanDate+" is null").execute();
+        final List<clsMobile_trVisitPlan_Detail> ListOfDetailUnplan = appDatabase.daoMobileTrVisitPlanDetail()
+                .gettxtConstdtPlanDateNull();
+
+        // final List<clsMobile_trVisitPlan_Detail> ListOfDetailRealisasi = new Select()
+        // .from(clsMobile_trVisitPlan_Detail.class)
+        // .where(_clsMobile_trVisitPlan_Detail.txtConstdtPlanDate+" is not null AND "
+        // +_clsMobile_trVisitPlan_Detail.txtConstintSubmit+" in (2,3)").execute();
+        final List<clsMobile_trVisitPlan_Detail> ListOfDetailRealisasi = appDatabase.daoMobileTrVisitPlanDetail()
+                .getBytxtConstdtPlanDateNotNullAndtxtConstintSubmit(new ArrayList<String>(){{add("2");add("3");}});
+
         if(ListOfDetailCall.size()>0){
             clsMobile_trVisitPlan_Detail dtLatestCallPlan = ListOfDetailCall.get(0);
             tvTotalRealisasi.setText(String.valueOf(ListOfDetailRealisasi.size()));
@@ -78,10 +108,10 @@ public class HomeFragment extends Fragment {
             tvTotalRealisasi.setText(String.valueOf(ListOfDetailRealisasi.size()));
         }
         Mobile_mConfigBL _Mobile_mConfigBL=new Mobile_mConfigBL();
-        String txtLink=_Mobile_mConfigBL.getValue(enum_mconfig.API.getValue());
+        String txtLink=_Mobile_mConfigBL.getValue(enum_mconfig.API.getValue(),getActivity());
         String txtAPILink =txtLink.replace("/VisitPlan/API/VisitPlanAPI/","");
         tvLatestCallPlanTitle.setText(txtAPILink);
-        String txtLASTSYN=_Mobile_mConfigBL.getValue(enum_mconfig.LAST_SYNC.getValue());
+        String txtLASTSYN=_Mobile_mConfigBL.getValue(enum_mconfig.LAST_SYNC.getValue(),getActivity());
         tvLatestCallPlanDate.setText(txtLASTSYN);
         tvTotalCallPlan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,7 +163,11 @@ public class HomeFragment extends Fragment {
         CircleImageView ivProfile = (CircleImageView) v.findViewById(R.id.profile_image);
 
         clsMobile_mBinaryFile dtclsMobile_mBinaryFile = new clsMobile_mBinaryFile();
-        List<clsMobile_mBinaryFile> ListOfclsMobile_mBinaryFile = new Select().from(clsMobile_mBinaryFile.class).where(dtclsMobile_mBinaryFile.txtConsttxtGUI_IDTable + "=?", "1").execute();
+        // List<clsMobile_mBinaryFile> ListOfclsMobile_mBinaryFile = new Select()
+        // .from(clsMobile_mBinaryFile.class)
+        // .where(dtclsMobile_mBinaryFile.txtConsttxtGUI_IDTable + "=?", "1").execute();
+        List<clsMobile_mBinaryFile> ListOfclsMobile_mBinaryFile = appDatabase
+                .daoMobile_mBinaryFile().getbytxtGUI_IDTable();
 
         if (ListOfclsMobile_mBinaryFile.size() != 0) {
             Bitmap dtBitmap = _clsMainBL.getImageFromclsMobile_mBinaryFile(ListOfclsMobile_mBinaryFile.get(0));
@@ -148,10 +182,15 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        List<clsMobile_trUserLogin> _ListOfUserLogin = new Select().from(clsMobile_trUserLogin.class).execute();
+        // List<clsMobile_trUserLogin> _ListOfUserLogin = new Select()
+        // .from(clsMobile_trUserLogin.class).execute();
+        List<clsMobile_trUserLogin> _ListOfUserLogin = appDatabase.daoMobileTrUserLogin().getAll();
+
         clsMobile_trUserLogin dt =_ListOfUserLogin.get(0);
 
-        List<clsMobile_MBranch> _ListOfMBranch = new Select().from(clsMobile_MBranch.class).execute();
+        // List<clsMobile_MBranch> _ListOfMBranch = new Select().from(clsMobile_MBranch.class).execute();
+        List<clsMobile_MBranch> _ListOfMBranch = appDatabase.daoMobileMBranch().getAll();
+
         if(_ListOfMBranch.size()>0){
             clsMobile_MBranch dtBranch =_ListOfMBranch.get(0);
             tvBranch.setText(dtBranch.TxtNamaCabang);
