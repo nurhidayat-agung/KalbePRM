@@ -1,4 +1,4 @@
-package callplan.prm.kalbe.kalbecallplanmobile.model.network;
+package callplan.prm.kalbe.kalbecallplanmobile.model.network.postData;
 
 import java.util.List;
 import com.google.gson.annotations.SerializedName;

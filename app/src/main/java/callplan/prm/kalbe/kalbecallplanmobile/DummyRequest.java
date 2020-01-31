@@ -26,10 +26,8 @@ public class DummyRequest extends AppCompatActivity {
         });
 
         btnPing.setOnClickListener(view -> {
-            dummyActivityVM.testPing();
+            dummyActivityVM.getToken();
         });
-
-        dummyActivityVM.testPing();
 
     }
 }

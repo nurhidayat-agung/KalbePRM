@@ -54,7 +54,7 @@ public class NetworkContext {
         Interceptor authInterceptor = chain -> {
             Request request = chain.request();
             Headers headers = request.headers().newBuilder()
-                    .add("Authorization", "Bearer " + clsHardCode.tokenBearer)
+                    .add("Authorization", "Bearer " + sharedPref.getString(clsHardCode.ConstGetToken.tagToken))
                     .build();
             request = request.newBuilder().headers(headers).build();
             return chain.proceed(request);
